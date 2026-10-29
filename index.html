@@ -1,0 +1,560 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Namma Prayana – BMTC Live</title>
+<meta name="theme-color" content="#d3202f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Namma Prayana">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&family=Noto+Sans+Kannada:wght@700&display=swap">
+<style>
+:root{--r:#d3202f;--rd:#a3121d;--rl:#fdecee;--bg:#fff;--card:#fff;--ink:#2b1215;--mut:#7b5a5e;--ln:#f0d5d8;--map:#f6f1ec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#1b0f11;--card:#26161a;--ink:#fbeff0;--mut:#c9a4a8;--ln:#4a2a2f;--rl:#3a171b;--map:#2a2022;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#1b0f11;--card:#26161a;--ink:#fbeff0;--mut:#c9a4a8;--ln:#4a2a2f;--rl:#3a171b;--map:#2a2022;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.45 'Hanken Grotesk',system-ui,sans-serif;padding-bottom:78px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--r);z-index:60}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--r);color:#fff;display:flex;align-items:center;gap:10px;padding:10px 14px}
+.ic{width:38px;height:38px;border-radius:50%;border:2px solid #fff;object-fit:cover;background:#fff}
+.brand{flex:1;line-height:1.1}.brand b{font-weight:800;font-size:17px}.brand b i{font:700 17px 'Noto Sans Kannada',sans-serif;font-style:normal}.brand small{display:block;font-size:11.5px;opacity:.92}
+.hb{background:#ffffff26;border:0;border-radius:50%;width:38px;height:38px;color:#fff;font-size:17px;position:relative}
+.hb em{position:absolute;top:-3px;right:-3px;background:#fff;color:var(--r);border-radius:9px;font:800 11px/16px sans-serif;min-width:16px;padding:0 4px;font-style:normal}
+.av{background:#fff;color:var(--r);font-weight:800}
+#menu{position:absolute;right:12px;top:58px;background:var(--card);color:var(--ink);border:1px solid var(--ln);border-radius:14px;min-width:210px;box-shadow:0 8px 28px #0004;padding:6px;display:none}
+#menu.on{display:block}#menu div{padding:8px 10px;color:var(--mut);font-size:13px;border-bottom:1px solid var(--ln);margin-bottom:4px}
+#menu button{display:block;width:100%;text-align:left;background:none;border:0;padding:9px 10px;border-radius:8px}#menu button:hover{background:var(--rl)}
+main{max-width:980px;margin:0 auto;padding:12px 14px}.v{display:none}.v.on{display:block}
+h2{font-size:20px;margin:6px 0 10px;font-weight:800}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0}
+.stats .card{padding:9px 10px}.stats small{color:var(--mut);font-size:12px}.stats b{display:block;font-size:17px}.stats .bad b{color:var(--r)}
+@media(max-width:620px){.stats{grid-template-columns:repeat(2,1fr)}}
+.srch{display:flex;gap:6px;border:2px solid var(--r);border-radius:28px;padding:3px 4px 3px 14px;background:var(--card);margin:8px 0}
+.srch input{flex:1;border:0;background:none;outline:0;min-width:0}
+.mic{border:0;background:var(--r);color:#fff;width:38px;height:38px;border-radius:50%;font-size:17px}.mic.on{animation:pu2 1s infinite}
+@keyframes pu2{50%{box-shadow:0 0 0 9px #d3202f44}}
+.mapw{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--ln);height:52vh;min-height:330px;background:var(--map)}
+#map,#gm{width:100%;height:100%;display:block}#gm{display:none}
+.bus{transition:transform 1s linear}.bus .bc{fill:#fff;stroke:#37474f;stroke-width:2}.bus .pr{display:none;fill:#d3202f55;transform-box:fill-box;transform-origin:center;animation:pp 1.1s infinite}
+.bus.bn .pr{display:block}.bus.bn .bc{fill:#d3202f;stroke:#7a0a12}@keyframes pp{to{transform:scale(1.9);opacity:0}}
+.live{position:absolute;left:8px;top:8px;background:#fff;color:#2b1215;border-radius:16px;padding:3px 10px;font-size:12px;font-weight:600;box-shadow:0 2px 8px #0003}
+.live::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--r);margin-right:6px;animation:pu2 1s infinite}
+.note{font-size:12px;color:var(--mut);margin:6px 0}.note input{width:150px;border:1px solid var(--ln);border-radius:6px;padding:2px 6px;background:var(--card)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:8px 0}.chip{border:1px solid var(--r);background:var(--card);color:var(--r);border-radius:18px;padding:5px 12px;white-space:nowrap}.chip.on{background:var(--r);color:#fff}
+.bl{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:8px}
+.bi{border-left:5px solid #37474f}.bi.bad{border-left-color:var(--r);background:var(--rl)}
+.bi .t{display:flex;justify-content:space-between;gap:6px}.rt{background:var(--r);color:#fff;border-radius:6px;padding:0 7px;font-weight:800;font-size:13px}.tg{color:var(--r);font-weight:800;font-size:12.5px}
+.bi small{color:var(--mut)}.bar{height:5px;background:var(--ln);border-radius:3px;margin-top:6px}.bar i{display:block;height:100%;background:var(--r);border-radius:3px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:end}.row label{flex:1;min-width:130px;font-size:12.5px;color:var(--mut)}
+select,.in{width:100%;padding:10px;border:1.5px solid var(--ln);border-radius:10px;background:var(--card);margin-top:3px}
+.btn{background:var(--r);color:#fff;border:0;border-radius:10px;padding:10px 16px;font-weight:600}.btn.o{background:none;color:var(--r);border:1.5px solid var(--r)}.btn:disabled{opacity:.5}
+.opt{margin-top:8px}.opt .t{display:flex;justify-content:space-between;align-items:center}
+.tk{display:flex;gap:12px;margin-top:8px;border-left:5px solid var(--r)}.qr{width:84px;height:84px;flex:none;fill:var(--ink);background:#fff;padding:4px;border-radius:6px;border:1px solid var(--ln)}
+.tk.ex{opacity:.55;border-left-color:#999}.st{font-weight:800;font-size:12px;color:#1b7a3a}.ex .st{color:#999}
+.al{margin-top:8px;border-left:5px solid var(--r)}.al.ok{border-left-color:#1b7a3a}.al small{color:var(--mut)}
+#toasts{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 62px);z-index:90;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;padding:0 10px}
+.ts{pointer-events:auto;max-width:520px;width:100%;background:var(--r);color:#fff;border-radius:12px;padding:11px 14px;box-shadow:0 8px 24px #0006;animation:sl .35s;position:relative;cursor:grab;user-select:none;touch-action:pan-y;transition:transform .28s cubic-bezier(.2,.9,.3,1),opacity .25s ease,max-height .25s ease,margin .25s ease,padding .25s ease}.ts:active{cursor:grabbing}.ts.sliding{transition:none!important}.ts.slide-dismiss-right{transform:translateX(115%)!important;opacity:0!important}.ts.slide-dismiss-left{transform:translateX(-115%)!important;opacity:0!important}.ts.w{background:#fff;color:var(--r);border:2px solid var(--r)}.ts.s{background:#7a0a12}.ts-close{position:absolute;right:8px;top:8px;background:#ffffff33;border:0;border-radius:50%;width:22px;height:22px;color:inherit;font-size:14px;line-height:20px;text-align:center;cursor:pointer;padding:0}.ts-close:hover{background:#ffffff66}
+@keyframes sl{from{transform:translateY(-30px);opacity:0}}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--card);border-top:1px solid var(--ln);display:flex;padding-bottom:env(safe-area-inset-bottom,0px)}
+nav button{flex:1;border:0;background:none;padding:8px 2px;color:var(--mut);font-size:12px}nav button span{display:block;font-size:19px}nav button.on{color:var(--r);font-weight:800}
+.fab{position:fixed;z-index:55;border:0;color:#fff;font-weight:800;box-shadow:0 6px 18px #0005}
+#sosb{left:12px;bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--rd);border-radius:28px;padding:12px 18px;border:2px solid #fff}
+#aib{right:12px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:54px;height:54px;border-radius:50%;font-size:22px;background:linear-gradient(135deg,#ff5a5f,#d3202f 55%,#7a0a12)}
+.ov{position:fixed;inset:0;background:#2b1215cc;z-index:100;display:none;align-items:center;justify-content:center;padding:14px}.ov.on{display:flex}
+.md{background:var(--card);border-radius:18px;max-width:420px;width:100%;padding:20px;max-height:92vh;overflow:auto}
+.lg{text-align:center}.lg img{width:92px;height:92px;border-radius:50%;border:3px solid var(--r)}.lg h1{margin:8px 0 2px;font-size:24px}.lg h1 i{font:700 24px 'Noto Sans Kannada',sans-serif;font-style:normal;color:var(--r)}
+.lg .in{margin-top:8px}.roles{display:flex;gap:6px;margin:10px 0}.roles .chip{flex:1}.err{color:var(--r);font-size:13px;min-height:18px}
+.sosbtn{width:150px;height:150px;border-radius:50%;border:6px solid #fff;outline:4px solid var(--r);background:var(--r);color:#fff;font:800 26px sans-serif;display:block;margin:14px auto;touch-action:none;user-select:none}
+#ai{position:fixed;right:0;bottom:0;left:0;max-width:440px;margin-left:auto;height:72vh;background:var(--card);border:1px solid var(--ln);border-radius:20px 20px 0 0;z-index:80;display:none;flex-direction:column;box-shadow:0 -8px 30px #0004}#ai.on{display:flex}
+#ai h3{margin:0;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--ln)}#ai h3 span{background:linear-gradient(90deg,#ff5a5f,#a3121d);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
+#msgs{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}.m{max-width:88%;padding:9px 12px;border-radius:14px}.m.u{align-self:flex-end;background:var(--r);color:#fff}.m.a{background:var(--rl)}
+.ai-in{display:flex;gap:6px;padding:8px;border-top:1px solid var(--ln)}.ai-in input{flex:1;border:1.5px solid var(--ln);border-radius:22px;padding:8px 14px;background:var(--bg);min-width:0}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.i{width:1.25em;height:1.25em;fill:currentColor;vertical-align:-.25em;flex:none}
+header{background:var(--card);color:var(--ink);border-bottom:1px solid var(--ln)}body::before{background:var(--card)}
+.logo{width:46px;height:46px;border-radius:13px;object-fit:cover;background:var(--r)}
+.brand b{font-size:21px}.brand small{font-size:11px;letter-spacing:.17em;color:var(--mut);opacity:1;margin-top:3px}
+header .hb{background:var(--card);color:var(--ink);border:1.5px solid var(--ln);border-radius:14px;width:46px;height:46px}
+header .hb.av{border-radius:50%;background:var(--rl);color:var(--r);border:2px solid #f2a9b0;font-weight:800;font-size:15px}
+.hb em{background:var(--r);color:#fff}#menu{top:68px}#menu button{display:flex;gap:10px;align-items:center}
+.hero{padding:6px 2px}.eb{color:var(--r);font-weight:800;letter-spacing:.12em;font-size:12.5px}.hero h1{font-size:34px;line-height:1.1;margin:8px 0}.hero p{color:var(--mut);margin:0 0 12px;font-size:16px}
+.pill{display:inline-flex;gap:8px;align-items:center;background:#e6f6ec;color:#1b7a3a;border-radius:24px;padding:9px 14px;font-weight:700;font-size:14px}.pill::before{content:"";width:10px;height:10px;border-radius:50%;background:#1b9a4a;flex:none}
+.stats{grid-template-columns:repeat(2,1fr);gap:12px}.sc{padding:14px}.sc .sl{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;color:var(--mut);font-size:15px}.sc b{font-size:34px;line-height:1.1;display:block;margin:8px 0 2px}.sc small{color:#1b7a3a;font-size:14px}.sc.bad small{color:var(--r)}
+.si{width:46px;height:46px;border-radius:14px;background:var(--rl);display:grid;place-items:center;color:var(--r);flex:none}.si .i{width:25px;height:25px}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:8px}.ch h2{margin:0}.lnk{background:none;border:0;color:var(--r);font-weight:800;font-size:15px}
+.qa{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.qa button{background:var(--card);border:1px solid var(--ln);border-radius:16px;padding:14px 4px;text-align:center;font-weight:800}.qa small{display:block;color:var(--mut);font-weight:400;font-size:12px}.qa .i{width:30px;height:30px;color:var(--r);display:block;margin:0 auto 6px}
+.sosi{display:inline-block;background:var(--r);color:#fff;border-radius:6px;padding:3px 7px;font:800 14px sans-serif;margin-bottom:4px}
+.foot{text-align:center;color:var(--mut);font-size:13px;margin:22px 0}
+.mapw.full{position:fixed;inset:0;height:100%;min-height:0;z-index:75;border-radius:0;border:0}#fx{display:none;position:absolute;right:10px;top:calc(10px + env(safe-area-inset-top,0px));z-index:5;background:#fff;border-radius:18px;padding:6px 14px;box-shadow:0 2px 8px #0004}.full #fx{display:block}
+.card .mapw{margin-top:4px}.bus .bp{fill:#37474f}.bus.bn .bp{fill:#fff}
+.bz{display:none;transition:transform 1s linear}.bz.on{display:block}.bzc{fill:#d3202f33;stroke:#d3202f;stroke-width:1.5;transform-box:fill-box;transform-origin:center;animation:pp 1.3s infinite}.bzt{font:800 10px sans-serif;fill:#fff;stroke:#a3121d;stroke-width:4;paint-order:stroke}
+#aib{border-radius:18px;width:62px;height:62px;background:var(--r)}#aib .i{width:30px;height:30px}#sosb .i{width:1.1em;height:1.1em}.mic .i,.hb .i{width:20px;height:20px}
+.chip .i,nav .i{vertical-align:-.3em}#ai h3 .i{color:var(--r)}.btn .i{width:1em;height:1em}
+
+nav{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hh,68px));bottom:auto;border-top:0;border-bottom:1px solid var(--ln);z-index:49}nav button{padding:6px 2px}
+body{padding-bottom:90px}#sosb,#aib{bottom:calc(16px + env(safe-area-inset-bottom,0px))}#toasts{top:calc(env(safe-area-inset-top,0px) + var(--hh,68px) + var(--nh,58px) + 6px)}
+.bnr{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hh,68px) + var(--nh,58px) + 6px);z-index:48;background:var(--r);color:#fff;border-radius:12px;padding:10px 14px;margin:8px 0;display:flex;gap:10px;align-items:center;font-weight:700;box-shadow:0 4px 14px #d3202f66;cursor:grab;touch-action:pan-y;user-select:none;transition:transform .28s cubic-bezier(.2,.9,.3,1),opacity .25s ease}.bnr:active{cursor:grabbing}.bnr.sliding{transition:none!important}.bnr.slide-dismiss-right{transform:translateX(115%)!important;opacity:0!important}.bnr.slide-dismiss-left{transform:translateX(-115%)!important;opacity:0!important}.bnr[hidden]{display:none}.bnr .i{width:24px;height:24px}
+#gf{position:absolute;left:0;top:0;width:100%;height:100%;border:0;pointer-events:none}#map{position:absolute;left:0;top:0;pointer-events:none}.live{z-index:3}
+.my{margin:8px 0;border-left:6px solid #37474f}.my.hold{background:var(--r);color:#fff;border-left-color:#7a0a12}.my.hold small{color:#fff}.my .big{font-size:44px;font-weight:800;line-height:1.1}.my[hidden]{display:none}
+#menu a{display:flex;gap:10px;align-items:center;width:100%;padding:9px 10px;border-radius:8px;color:inherit;text-decoration:none}#menu a:hover{background:var(--rl)}.pw{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin:18px 0 0}.pw a{border:1.5px solid var(--r);color:var(--r);border-radius:20px;padding:6px 14px;font-weight:800;text-decoration:none;background:var(--card)}.pw span{color:var(--mut);font-size:13px}.qc{margin-top:10px;border-top:1px solid var(--ln);padding-top:10px}.qc .in{margin-top:6px}.qs{font-size:12.5px;font-weight:800;color:#1b7a3a}.tag{background:var(--rl);color:var(--r);border-radius:8px;padding:3px 8px;font-weight:800;font-size:12px}.qt{width:100%;border-collapse:collapse;margin:8px 0}.qt td,.qt th{padding:6px;border-bottom:1px solid var(--ln);text-align:left}a.btn{text-decoration:none;display:inline-block;text-align:center}
+
+/* ---- big moving bus scene ---- */
+.sc3{position:relative;height:200px;margin:14px 0 6px;border-radius:20px;overflow:hidden;border:1px solid var(--ln);background:linear-gradient(180deg,var(--rl),var(--card) 78%)}
+.sc3.sm{height:130px;margin:10px 0}
+.sc3 .sun{position:absolute;right:12%;top:12%;width:44px;height:44px;border-radius:50%;background:radial-gradient(#ffe08a,#ffb300);opacity:.9}
+.sc3 .city{position:absolute;left:0;width:200%;display:flex}
+.sc3 .city svg{flex:1;display:block}
+.sc3 .far{bottom:36px;opacity:.45;animation:cty 70s linear infinite}.sc3 .far svg{height:100px;fill:var(--mut)}
+.sc3 .near{bottom:36px;opacity:.9;animation:cty 28s linear infinite}.sc3 .near svg{height:70px;fill:var(--ln)}
+@keyframes cty{to{transform:translateX(-50%)}}
+.sc3 .road{position:absolute;left:0;right:0;bottom:0;height:36px;background:#37474f}
+.sc3 .road i{position:absolute;left:0;right:0;top:16px;height:4px;background:repeating-linear-gradient(90deg,#fff 0 26px,transparent 26px 54px);background-size:54px 4px;animation:rd .45s linear infinite}
+@keyframes rd{to{background-position:-54px 0}}
+.sc3 .bigbus{position:absolute;bottom:13px;width:min(74%,340px);left:-80%;animation:drv 9s linear infinite;will-change:left}
+@keyframes drv{to{left:108%}}
+.sc3 .bigbus svg{display:block;width:100%;height:auto;animation:bob .32s ease-in-out infinite alternate}
+@keyframes bob{to{transform:translateY(-2px)}}
+.sc3 .wh{animation:spin .5s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sc3 .tagl{position:absolute;left:12px;top:10px;font-weight:800;font-size:12px;letter-spacing:.12em;color:var(--r)}
+@media(prefers-reduced-motion:reduce){.sc3 .bigbus{left:14%}}
+/* ---- moving map ---- */
+#gf,#map{transform-origin:0 0;will-change:transform}
+.camb{position:absolute;left:8px;top:42px;z-index:3;background:#fff;color:#2b1215;border:0;border-radius:16px;padding:4px 11px;font:600 12px 'Hanken Grotesk',sans-serif;box-shadow:0 2px 8px #0003}
+.camb.off{opacity:.8}
+.qpw{margin:12px 0 4px;justify-content:flex-start}
+.qpw a{display:inline-flex;gap:6px;align-items:center}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs><symbol id="i-bus" viewBox="0 0 24 24"><path d="M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-6H6V6h12v5z"/></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></symbol><symbol id="i-ticket" viewBox="0 0 24 24"><path d="M22 10V6c0-1.1-.9-2-2-2H4c-1.1 0-1.99.9-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-9 7.5h-2v-2h2v2zm0-4.5h-2v-2h2v2zm0-4.5h-2v-2h2v2z"/></symbol><symbol id="i-warn" viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></symbol><symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></symbol><symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></symbol><symbol id="i-map" viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></symbol><symbol id="i-route" viewBox="0 0 24 24"><path d="M21.71 11.29l-9-9a.996.996 0 00-1.41 0l-9 9a.996.996 0 000 1.41l9 9c.39.39 1.02.39 1.41 0l9-9a.996.996 0 000-1.41zM14 14.5V12h-4v3H8v-4c0-.55.45-1 1-1h5V7.5l3.5 3.5-3.5 3.5z"/></symbol><symbol id="i-send" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></symbol><symbol id="i-close" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></symbol><symbol id="i-out" viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></symbol><symbol id="i-swap" viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></symbol><symbol id="i-theme" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18V4c4.41 0 8 3.59 8 8s-3.59 8-8 8z"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></symbol></defs></svg>
+<div class="ov on" id="login"><div class="md lg"><img class="ic2" alt="Namma Prayana logo"><h1>Namma <i>ಪ್ರಯಾಣ</i></h1><p class="note">Live BMTC tracking, tickets and safety alerts. Log in to continue.</p><div id="loginScene"></div>
+<input class="in" id="ln" placeholder="Your name" autocomplete="name"><input class="in" id="lp" placeholder="Mobile number (10 digits)" inputmode="numeric" maxlength="16" autocomplete="tel">
+<div class="roles" id="roles"><button class="chip on">Passenger</button><button class="chip">Conductor</button><button class="chip">Driver</button></div>
+<div id="busrow" hidden><input class="in" id="lb" list="bl2" placeholder="Your bus number, e.g. KA57F1204" autocomplete="off"><datalist id="bl2"></datalist></div><div class="err" id="lerr"></div><button class="btn" style="width:100%" id="lgo">Log in</button><p class="note"><a href="#" id="guest" style="color:var(--r)">Continue as guest</a></p></div></div>
+
+<header><img class="logo ic2" alt="Namma Prayana"><div class="brand"><b>Namma Prayana</b><small>SMARTER BMTC JOURNEYS</small></div><button class="hb" id="bell" aria-label="Alerts"><svg class="i"><use href="#i-bell"/></svg><em id="bdg" hidden>0</em></button><button class="hb av" id="avb" aria-label="Profile">G</button><div id="menu"><div id="mi"></div><button id="mp"><svg class="i"><use href="#i-user"/></svg> My profile</button><button data-v="tix"><svg class="i"><use href="#i-ticket"/></svg> My tickets</button><button data-v="alerts"><svg class="i"><use href="#i-bell"/></svg> Notification settings</button><button id="thm"><svg class="i"><use href="#i-theme"/></svg> Light / dark</button><a href="https://www.qpiai.tech/" target="_blank" rel="noopener"><svg class="i"><use href="#i-spark"/></svg> QpiAI-Opt</a><a href="https://qcloud.qpiai.tech/" target="_blank" rel="noopener"><svg class="i"><use href="#i-route"/></svg> QpiAI Cloud</a><button id="lo"><svg class="i"><use href="#i-out"/></svg> Sign out</button></div></header>
+<nav><button class="on" data-v="live"><span><svg class="i"><use href="#i-map"/></svg></span>Live</button><button data-v="plan"><span><svg class="i"><use href="#i-route"/></svg></span>Planner</button><button data-v="tix"><span><svg class="i"><use href="#i-ticket"/></svg></span>Tickets</button><button data-v="alerts"><span><svg class="i"><use href="#i-bell"/></svg></span>Alerts</button></nav>
+<div id="toasts"></div>
+
+<main>
+<section class="v on" id="v-live"><div class="bnr" id="bnr" hidden></div><div class="card my" id="my" hidden></div><div class="hero"><div class="eb" id="eb"></div><h1>Your city. Your bus. Live.</h1><p>Plan smarter, track every bus and stay ahead of service disruptions.</p><div class="pill" id="pill"></div><div id="heroScene"></div><div class="pw qpw"><span>Optimization powered by</span><a href="https://www.qpiai.tech/" target="_blank" rel="noopener"><svg class="i"><use href="#i-spark"/></svg> QpiAI-Opt</a><a href="https://qcloud.qpiai.tech/" target="_blank" rel="noopener"><svg class="i"><use href="#i-route"/></svg> QpiAI Cloud</a></div></div>
+<div class="stats" id="stats"></div>
+<div class="card" id="mapcard"><div class="ch"><div><h2>Live bus map</h2><div class="note">Every bus and stop, updated each second</div></div><button class="lnk" id="full">Full tracking</button></div>
+<div class="srch"><input id="q" placeholder="Search bus no. or stop, e.g. 500D, Silk Board" aria-label="Search"><button class="mic" id="qm" aria-label="Voice search"><svg class="i"><use href="#i-mic"/></svg></button></div>
+<div class="mapw"><iframe id="gf" title="Google Maps" referrerpolicy="no-referrer-when-downgrade"></iframe><svg id="map" viewBox="0 0 480 580"></svg><div id="gm"></div><div class="live" id="lv">LIVE</div><button class="camb" id="camb"></button><button id="fx" class="lnk">Close map</button></div>
+<div class="note" id="mn">Map by Google Maps with live buses on top (demo runs 5× speed). If the map looks blank, tap Simple map. For fully interactive Google Maps, add your API key: <input id="gk" placeholder="Google Maps API key"> <button class="chip" id="gkb">Turn on</button></div><div class="chips" id="mm"><button class="chip on" data-mm="embed">Google Maps</button><button class="chip" data-mm="simple">Simple map</button></div><div class="chips" id="chips"></div></div>
+<h2 style="margin-top:14px">Live buses</h2><div class="bl" id="bl"></div>
+<div class="card" style="margin-top:14px"><h2 style="margin:0">Quick actions</h2><p class="note">Everything you need, in one place</p><div class="qa"><button data-v="tix"><svg class="i"><use href="#i-ticket"/></svg>My tickets<small>View &amp; manage</small></button><button id="qsos"><span class="sosi">SOS</span><br>SOS alert<small>Emergency help</small></button><button id="qai"><svg class="i"><use href="#i-spark"/></svg>Prayana AI<small>Ask anything</small></button></div></div>
+<div class="card" style="margin-top:14px"><div class="ch"><h2 style="margin:0">Service notifications</h2><button class="lnk" id="sim">Test alert</button></div><p class="note">Important updates for your journey</p><div id="sn"></div></div>
+<div class="card" id="qp" style="margin-top:14px"><div class="ch"><h2 style="margin:0">Dispatch optimizer</h2><span class="tag">QpiAI-Opt ready</span></div><p class="note">Turns bunching into a QUBO problem: which bus holds, and for how long, to even out the gaps.</p>
+<div class="row"><label>Route<select id="qr"></select></label><label>Scenario<select id="qsc"><option value="Normal Flow">Normal Flow</option><option value="Heavy Rush Hour">Heavy Rush Hour</option><option value="Accident Delay">Accident Delay</option></select></label><button class="btn" id="qrun">Optimize</button></div><div id="qout"></div>
+<div class="row" style="margin-top:8px"><button class="btn o" id="qexp">Export QUBO (.json)</button><a class="btn o" href="https://qcloud.qpiai.tech/" target="_blank" rel="noopener">QpiAI Cloud</a><a class="btn o" href="https://www.qpiai.tech/" target="_blank" rel="noopener">QpiAI-Opt</a></div>
+<div class="qc"><b>Connect QpiAI Cloud</b><p class="note" style="margin:2px 0">Paste your QpiAI Cloud / QpiAI-Opt solver endpoint and API key. The optimizer will send the QUBO there instead of the local demo solver.</p><input class="in" id="qep" placeholder="Solver endpoint URL (https://…)" autocomplete="off"><input class="in" id="qky" type="password" placeholder="API key" autocomplete="off"><div class="row" style="margin-top:8px"><button class="btn" id="qcon">Connect</button><button class="btn o" id="qdis">Disconnect</button></div><div class="qs" id="qst">Solver: local demo (in your browser)</div></div>
+<details class="note"><summary>How the solver works</summary>Runs a local exact-search demo solver in your browser unless QpiAI Cloud is connected above. When connected, it POSTs JSON {Q, constant, hold_options_s, buses} to your endpoint with a Bearer key and expects back an array of chosen hold-option indexes (or {choices:[…]}); if the call fails it falls back to the local solver. You can also define <code>window.QPIAI_SOLVER(problem)</code> to send <code>problem.Q</code> to them and return the chosen hold option index for each bus.</details></div>
+<p class="foot">Namma Prayana · A smart mobility concept for Bengaluru. Hackathon demo · Not an official BMTC service. Optimizer built to plug into QpiAI-Opt and QpiAI Cloud.</p><div class="pw"><span>Optimization powered by</span><a href="https://www.qpiai.tech/" target="_blank" rel="noopener">QpiAI-Opt</a><a href="https://qcloud.qpiai.tech/" target="_blank" rel="noopener">QpiAI Cloud</a></div></section>
+
+<section class="v" id="v-plan"><h2>Journey planner</h2><div class="card"><div class="row"><label>From<select id="pf"></select></label><button class="btn o" id="sw" aria-label="Swap"><svg class="i"><use href="#i-swap"/></svg></button><label>To<select id="pt"></select></label></div><button class="btn" style="margin-top:10px;width:100%" id="pgo">Find buses</button></div><div id="pres"></div></section>
+
+<section class="v" id="v-tix"><h2>Tickets</h2><div class="card"><div class="row"><label>From<select id="tf"></select></label><label>To<select id="tt"></select></label><label style="max-width:90px">Seats<select id="tn"><option>1</option><option>2</option><option>3</option><option>4</option></select></label></div><button class="btn" style="margin-top:10px;width:100%" id="tgo">Pay with UPI &amp; get ticket</button><div class="err" id="terr"></div></div><div id="tl"></div></section>
+
+<section class="v" id="v-alerts"><h2>Alerts</h2><div class="card"><b>Bunching &amp; safety alerts</b><p class="note">Sent to every passenger, conductor and driver on the affected route.</p><button class="btn o" id="np">Enable phone notifications</button></div><div id="al"></div></section>
+</main>
+
+
+<button class="fab" id="sosb"><svg class="i"><use href="#i-warn"/></svg> SOS</button><button class="fab" id="aib" aria-label="Prayana AI"><svg class="i"><use href="#i-spark"/></svg></button>
+
+<div class="ov" id="sos"><div class="md" style="text-align:center"><h2 style="color:var(--r)">Emergency SOS</h2><p class="note">Hold the button for 2 seconds. Your live location and bus details go to BMTC control and emergency contacts.</p>
+<label class="note">Bus you’re on<select id="sb"></select></label><button class="sosbtn" id="sbtn">HOLD</button><div id="sres" class="note"></div>
+<div class="row"><a class="btn" style="text-decoration:none;flex:1;text-align:center" href="tel:112">Call 112</a><a class="btn o" style="text-decoration:none;flex:1;text-align:center" href="tel:1091">Women helpline 1091</a></div><button class="btn o" style="width:100%;margin-top:8px" id="sx">Close</button></div></div>
+
+<div class="ov" id="det"><div class="md"><h2 id="dt" style="color:var(--r)"></h2><p id="dm"></p><div class="row"><button class="btn" id="dmap" style="flex:1">Show on map</button><button class="btn o" id="dx" style="flex:1">Close</button></div></div></div>
+<div id="ai"><h3><span><svg class="i"><use href="#i-spark"/></svg> Prayana AI</span><button class="hb" style="background:var(--rl);color:var(--r)" id="aix"><svg class="i"><use href="#i-close"/></svg></button></h3><div id="msgs"></div>
+<div class="chips" style="padding:0 8px"><button class="chip">Is there bunching now?</button><button class="chip">Next bus at Silk Board</button><button class="chip">Majestic to Whitefield</button><button class="chip">How busy is it?</button></div>
+<div class="ai-in"><input id="ai-q" placeholder="Ask about buses, fares, routes…"><button class="mic" id="aim" aria-label="Voice"><svg class="i"><use href="#i-mic"/></svg></button><button class="btn" id="ais"><svg class="i"><use href="#i-send"/></svg></button></div></div>
+
+<script>
+const ICON='data:image/jpeg;base64,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',GKEY='',$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+$$('.ic2').forEach(i=>{i.src='/static/logo.jpeg';i.onerror=()=>{i.src=ICON;};});const I=n=>`<svg class="i"><use href="#i-${n}"/></svg>`,BUSP='M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-6H6V6h12v5z';
+{const l=document.createElement('link');l.rel='icon';l.href='/static/logo.jpeg';l.onerror=()=>{l.href=ICON;};document.head.appendChild(l);const a=document.createElement('link');a.rel='apple-touch-icon';a.href='/static/logo.jpeg';a.onerror=()=>{a.href=ICON;};document.head.appendChild(a);
+try{const m=document.createElement('link');m.rel='manifest';m.href=URL.createObjectURL(new Blob([JSON.stringify({name:'Namma Prayana',short_name:'Prayana',display:'standalone',background_color:'#ffffff',theme_color:'#d3202f',icons:[{src:ICON,sizes:'192x192',type:'image/jpeg'}]})],{type:'application/manifest+json'}));document.head.appendChild(m)}catch(e){}}
+const mem={},st={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return k in mem?mem[k]:d}},set(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const ST={'Majestic':[12.9777,77.5728],'Town Hall':[12.9636,77.5855],'Jayanagar 4th Block':[12.925,77.583],'Silk Board':[12.917,77.623],'Electronic City':[12.8456,77.6603],'Hebbal':[13.0358,77.597],'Yelahanka':[13.1005,77.5963],'MG Road':[12.9756,77.6066],'Indiranagar':[12.9784,77.6408],'Marathahalli':[12.9569,77.7011],'Whitefield':[12.9698,77.75]};
+const RT=[{id:'500D',s:['Majestic','Town Hall','Jayanagar 4th Block','Silk Board','Electronic City'],c:'#546e7a'},{id:'258A',s:['Majestic','Hebbal','Yelahanka'],c:'#00796b'},{id:'G-4',s:['Majestic','MG Road','Indiranagar','Marathahalli','Whitefield'],c:'#6a1b9a'},{id:'335E',s:['Majestic','MG Road','Marathahalli','Whitefield'],c:'#e65100'}],RM={};
+RT.forEach(r=>{RM[r.id]=r;r.p=r.s.map(n=>ST[n]);r.cum=[0];for(let i=1;i<r.p.length;i++){const a=r.p[i-1],b=r.p[i];r.cum.push(r.cum[i-1]+Math.hypot((b[1]-a[1])*108,(b[0]-a[0])*111))}r.L=r.cum[r.p.length-1]});
+const BUS=[['KA57F1204','500D',2,.042],['KA57F1377','500D',3.4,.03],['KA57F1450','500D',12,.034],['KA57F2101','258A',3,.045],['KA57F2188','258A',5.2,.033],['KA57F3012','G-4',5,.045],['KA57F3090','G-4',7.5,.034],['KA57F3155','G-4',22,.034],['KA57F1521','500D',20,.038],['KA57F1633','500D',29,.032],['KA57F2245','258A',11,.04],['KA57F2310','258A',17,.036],['KA57F2377','258A',23,.031],['KA57F3208','G-4',14,.04],['KA57F3281','G-4',31,.033],['KA57F4102','335E',4,.041],['KA57F4156','335E',11,.035],['KA57F4219','335E',18,.043],['KA57F4274','335E',26,.032],['KA57F4338','335E',33,.038]].map(a=>({id:a[0],r:a[1],pos:a[2],v:a[3],v0:a[3]}));
+const BN={},ALS=st.get('np_al',[]);let U=st.get('np_user',{n:'',p:'',role:'Passenger'}),SEL='',unread=0,TK=st.get('np_tk',[]);
+const pt=(r,d)=>{let i=0;while(i<r.p.length-2&&d>r.cum[i+1])i++;const t=Math.min(1,Math.max(0,(d-r.cum[i])/(r.cum[i+1]-r.cum[i])));return[r.p[i][0]+(r.p[i+1][0]-r.p[i][0])*t,r.p[i][1]+(r.p[i+1][1]-r.p[i][1])*t]};
+const wh=b=>{const r=RM[b.r],fw=b.pos<r.L,d=fw?b.pos:2*r.L-b.pos;return{r,fw,d,p:pt(r,d)}};
+const nxt=b=>{const w=wh(b),c=w.r.cum;let i;if(w.fw){i=c.findIndex(x=>x>w.d)}else{i=c.length-1;while(i>0&&c[i]>=w.d)i--}return w.r.s[Math.max(0,i)]};
+const held=b=>b.opt>0||!!(BN[b.r]&&(()=>{const S=BN[b.r];return !!(S&&S.on&&b.id!=S.pair[1]&&(S.hold>0||b.id==S.pair[0]))})());
+const bn=b=>BN[b.r]&&BN[b.r].on&&BN[b.r].pair.includes(b.id);
+const svc=()=>{const h=new Date().getHours();return h>=23||h<5?{k:'Night service',f:30,c:15}:(h>=8&&h<11)||(h>=17&&h<21)?{k:'Peak hours',f:8,c:85}:{k:'Off-peak',f:15,c:48}};
+const crowd=b=>Math.max(5,Math.min(99,svc().c+(b.id.charCodeAt(8)*7%21)-10));
+const fare=km=>Math.max(10,Math.round(km*3.2/5)*5),fm=t=>t<1?'Arriving':Math.round(t)+' min';
+const P=n=>String(n).padStart(2,'0');
+function clock(){const d=new Date(),S=svc();$('#eb').textContent=d.toLocaleDateString('en-IN',{weekday:'long'}).toUpperCase()+' · BENGALURU · '+d.toLocaleTimeString('en-IN');$('#pill').textContent=S.k+' · a bus every '+S.f+' min · '+d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}
+/* toast / alerts with slide-to-dismiss */
+function slideDismiss(el, dir='right', onDone){
+  if(!el || el.dataset.dismissing) return;
+  el.dataset.dismissing = '1';
+  el.classList.add(dir==='left' ? 'slide-dismiss-left' : 'slide-dismiss-right');
+  setTimeout(()=>{
+    if(el && el.parentNode) el.remove();
+    if(onDone) onDone();
+  }, 280);
+}
+
+function toast(m, k){
+  const t = document.createElement('div');
+  t.className = 'ts ' + (k || '');
+  t.innerHTML = `<button class="ts-close" aria-label="Dismiss">&times;</button><div class="ts-body">${m}</div><small style="display:block;font-size:10px;opacity:.75;margin-top:4px;user-select:none">&larr; slide to dismiss &rarr;</small>`;
+
+  const cb = t.querySelector('.ts-close');
+  if(cb){
+    cb.onclick = (e)=>{
+      e.stopPropagation();
+      slideDismiss(t, 'right');
+    };
+  }
+
+  let startX = 0, currentX = 0, isDragging = false, hasMoved = false;
+
+  const onStart = (e)=>{
+    if(e.target.closest('.ts-close')) return;
+    startX = e.clientX || e.touches?.[0]?.clientX || 0;
+    currentX = 0;
+    isDragging = true;
+    hasMoved = false;
+    t.classList.add('sliding');
+  };
+
+  const onMove = (e)=>{
+    if(!isDragging) return;
+    const clientX = e.clientX || e.touches?.[0]?.clientX || 0;
+    const dx = clientX - startX;
+    if(Math.abs(dx) > 4) hasMoved = true;
+    currentX = dx;
+    t.style.transform = `translateX(${dx}px) rotate(${dx * 0.03}deg)`;
+    t.style.opacity = `${Math.max(0.1, 1 - Math.abs(dx)/260)}`;
+  };
+
+  const onEnd = ()=>{
+    if(!isDragging) return;
+    isDragging = false;
+    t.classList.remove('sliding');
+
+    if(Math.abs(currentX) > 45){
+      slideDismiss(t, currentX > 0 ? 'right' : 'left');
+    } else if(hasMoved){
+      t.style.transition = 'transform .25s ease, opacity .25s ease';
+      t.style.transform = '';
+      t.style.opacity = '';
+    } else {
+      slideDismiss(t, 'right');
+    }
+  };
+
+  t.addEventListener('touchstart', onStart, { passive: true });
+  t.addEventListener('touchmove', onMove, { passive: true });
+  t.addEventListener('touchend', onEnd);
+  t.addEventListener('mousedown', onStart);
+
+  const moveFn = (e)=>{ if(isDragging) onMove(e); };
+  const upFn = ()=>{ if(isDragging) onEnd(); };
+  window.addEventListener('mousemove', moveFn);
+  window.addEventListener('mouseup', upFn);
+
+  $('#toasts').appendChild(t);
+
+  const timer = setTimeout(()=>{
+    slideDismiss(t, 'right');
+  }, k === 's' ? 12000 : 7500);
+
+  const obs = new MutationObserver(()=>{
+    if(!document.body.contains(t)){
+      clearTimeout(timer);
+      window.removeEventListener('mousemove', moveFn);
+      window.removeEventListener('mouseup', upFn);
+      obs.disconnect();
+    }
+  });
+  obs.observe($('#toasts'), { childList: true });
+}
+
+function beep(){try{const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=880;g.gain.value=.06;o.start();o.stop(a.currentTime+.3)}catch(e){}}
+function notify(title,msg,k,rid){const a={t:Date.now(),title,msg,k,rid};ALS.unshift(a);ALS.length=Math.min(ALS.length,40);st.set('np_al',ALS);unread++;badge();toast('<b>'+title+'</b><br>'+msg,k=='ok'?'':k=='sos'?'s':'');if(k!='ok'){beep();try{navigator.vibrate&&navigator.vibrate([250,100,250])}catch(e){}}
+try{if(window.Notification&&Notification.permission=='granted')new Notification(title,{body:msg.replace(/<[^>]+>/g,''),icon:ICON})}catch(e){}renderAl()}
+const badge=()=>{$('#bdg').hidden=!unread;$('#bdg').textContent=unread};
+function renderAl(){
+  renderSN();
+  const el = $('#al');
+  if(!el) return;
+  if(!ALS.length){
+    el.innerHTML = '<p class="note">No alerts yet. Use “Simulate bunching” on the Live tab to see one.</p>';
+    return;
+  }
+  el.innerHTML = ALS.map((a, i)=>`<div class="card al ${a.k=='ok'?'ok':''}" data-idx="${i}" style="touch-action:pan-y;user-select:none;cursor:grab;transition:transform .28s cubic-bezier(.2,.9,.3,1),opacity .25s ease"><b>${a.title}</b><br>${a.msg}<br><small>${new Date(a.t).toLocaleString('en-IN')}</small><small style="display:block;font-size:10px;opacity:.65;margin-top:4px">&larr; slide card to dismiss &rarr;</small></div>`).join('');
+  
+  el.querySelectorAll('.card.al').forEach(card => {
+    let sX = 0, cX = 0, drag = false;
+    card.addEventListener('touchstart', e => {
+      sX = e.touches[0].clientX;
+      cX = 0;
+      drag = true;
+      card.classList.add('sliding');
+    }, { passive: true });
+    card.addEventListener('touchmove', e => {
+      if(!drag) return;
+      cX = e.touches[0].clientX - sX;
+      card.style.transform = `translateX(${cX}px)`;
+      card.style.opacity = `${Math.max(0.1, 1 - Math.abs(cX)/240)}`;
+    }, { passive: true });
+    card.addEventListener('touchend', () => {
+      if(!drag) return;
+      drag = false;
+      card.classList.remove('sliding');
+      if(Math.abs(cX) > 50){
+        card.style.transition = 'transform .28s ease, opacity .25s ease';
+        card.style.transform = `translateX(${cX > 0 ? '115%' : '-115%'})`;
+        card.style.opacity = '0';
+        setTimeout(() => {
+          const idx = parseInt(card.dataset.idx, 10);
+          if(!isNaN(idx)){
+            ALS.splice(idx, 1);
+            st.set('np_al', ALS);
+            unread = Math.max(0, unread - 1);
+            badge();
+            renderAl();
+          }
+        }, 260);
+      } else {
+        card.style.transition = 'transform .25s ease, opacity .25s ease';
+        card.style.transform = '';
+        card.style.opacity = '';
+      }
+    });
+  });
+}
+function alertB(r,a,b){const g=nxt(a),mine=U.role!='Passenger'?U.bus:'',mb=BUS.find(x=>x.id==mine),hl=BUS.filter(x=>x.r==r.id&&x.id!=b.id).map(x=>x.id).join(', ');
+const m=mb?(mine==a.id?`HOLD bus ${a.id} at ${g} for 15 seconds, then move on. ${b.id} is just ahead of you.`:mine==b.id?`Bus ${a.id} behind you is holding for 15 seconds. Keep your normal pace, don’t slow down.`:mb.r==r.id?`Bunching on ${r.id}. Wait 15 seconds at your next stop (${nxt(mb)}), then move.`:`Bunching on route ${r.id}, not your route. No action needed.`):`Buses ${a.id} and ${b.id} are running together near ${g}. Following buses were told to wait 15 seconds, so expect a short delay.`;
+notify(`Bunching on route ${r.id}`,m+`<br><small>Hold order sent to ${hl}: wait 15 s, then move.</small>`,'b',r.id)}
+/* map */
+let GM=null,GMK={},GBZ={};let MODE='embed',EMB={w:360,h:330,z:10,lat:12.973,lng:77.661};
+const X=p=>MODE=='simple'?[(p[1]-77.52)*2000,(13.12-p[0])*2000]:(()=>{const s=256*2**EMB.z,mx=l=>(l+180)/360*s,my=a=>(1-Math.log(Math.tan(a*Math.PI/180)+1/Math.cos(a*Math.PI/180))/Math.PI)/2*s;return[EMB.w/2+mx(p[1])-mx(EMB.lng),EMB.h/2+my(p[0])-my(EMB.lat)]})();
+function setView(){const m=$('.mapw'),svg=$('#map'),f=$('#gf');if(MODE=='simple'){svg.setAttribute('viewBox','0 0 480 580');svg.setAttribute('preserveAspectRatio','xMidYMid slice');f.style.display='none';return}
+const w=m.clientWidth||360,h=m.clientHeight||330;EMB.w=w;EMB.h=h;let z=12;for(;z>8;z--){const s=256*2**z,mx=l=>(l+180)/360*s,my=a=>(1-Math.log(Math.tan(a*Math.PI/180)+1/Math.cos(a*Math.PI/180))/Math.PI)/2*s;if(mx(77.78)-mx(77.54)<w*.92&&my(12.82)-my(13.13)<h*.88)break}
+EMB.z=z;svg.setAttribute('viewBox','0 0 '+w+' '+h);svg.setAttribute('preserveAspectRatio','none');f.style.display='block';const src='https://maps.google.com/maps?ll='+EMB.lat+','+EMB.lng+'&z='+z+'&t=m&hl=en&output=embed';if(f.dataset.s!=src){f.dataset.s=src;f.src=src}}
+function buildMap(){setView();let s=MODE=='simple'?'<defs><pattern id="g" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#e5dad3" stroke-width=".7"/></pattern></defs><rect width="480" height="580" fill="var(--map)"/><rect width="480" height="580" fill="url(#g)"/><path d="M60 330q60-40 110 10t-30 60-80-20z" fill="#cfe3ee" opacity=".7"/>':'';
+RT.forEach(r=>s+=`<polyline fill="none" stroke="${r.c}" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="7 4" opacity=".75" points="${r.p.map(p=>X(p).join(',')).join(' ')}"/>`);
+for(const n in ST){const[x,y]=X(ST[n]);s+=`<circle cx="${x}" cy="${y}" r="6" fill="#fff" stroke="#d3202f" stroke-width="3"/><text x="${x+7}" y="${y+3}" font-size="10.5" font-weight="800" fill="#7a0a12" stroke="#fff" stroke-width="2.5" paint-order="stroke">${n}</text>`}
+BUS.forEach((b,i)=>s+=`<g class="bus" id="bus${i}"><circle class="pr" r="14"/><circle class="bc" r="11"/><path class="bp" d="${BUSP}" transform="translate(-9 -9) scale(.75)"/></g>`);RT.forEach(r=>s+=`<g class="bz" id="bz-${r.id}"><circle class="bzc" r="28"/><circle r="6" fill="#d3202f" stroke="#fff" stroke-width="2.5"/><text y="-34" text-anchor="middle" class="bzt">Bunching ${r.id}</text></g>`);$('#map').innerHTML=s}
+window.gInit=()=>{const gm=google.maps,bd=new gm.LatLngBounds();GM=new gm.Map($('#gm'),{center:{lat:13,lng:77.62},zoom:11,disableDefaultUI:true,zoomControl:true,fullscreenControl:false});RT.forEach(r=>new gm.Polyline({map:GM,path:r.p.map(p=>({lat:p[0],lng:p[1]})),strokeColor:r.c,strokeOpacity:.85,strokeWeight:5}));
+for(const n in ST){const p={lat:ST[n][0],lng:ST[n][1]};bd.extend(p);new gm.Marker({map:GM,title:n,position:p,zIndex:5,icon:{path:0,scale:7,fillColor:'#fff',fillOpacity:1,strokeColor:'#d3202f',strokeWeight:3.5,labelOrigin:new gm.Point(0,-2.5)},label:{text:n,color:'#7a0a12',fontWeight:'800',fontSize:'11px'}})}
+GM.fitBounds(bd);BUS.forEach(b=>GMK[b.id]=new gm.Marker({map:GM,title:b.id}));
+RT.forEach(r=>GBZ[r.id]={c:new gm.Circle({map:GM,radius:1300,fillColor:'#d3202f',fillOpacity:.28,strokeColor:'#d3202f',strokeWeight:2,visible:false}),m:new gm.Marker({map:GM,visible:false,zIndex:1000,icon:{path:0,scale:10,fillColor:'#d3202f',fillOpacity:1,strokeColor:'#fff',strokeWeight:3,labelOrigin:new gm.Point(0,-2.6)},label:{text:'Bunching '+r.id,color:'#a3121d',fontWeight:'800',fontSize:'12px'}})});
+$('#map').style.display='none';$('#gf').style.display='none';$('#gm').style.display='block';$('#mn').textContent='Google Maps is live. Stops are highlighted; bunched buses show a red zone.'};
+window.gm_authFailure=()=>{toast('Google Maps rejected the key. Check the key and that Maps JavaScript API is enabled.','w');st.set('np_gk','');GM=null;$('#gm').style.display='none';$('#map').style.display='block';setView()};
+function drawMap(){if(!GM&&MODE=='embed'){const m=$('.mapw');if(m.clientWidth&&(m.clientWidth!=EMB.w||m.clientHeight!=EMB.h))buildMap()}BUS.forEach((b,i)=>{const w=wh(b),x=bn(b);if(GM){const m=GMK[b.id];m.setPosition({lat:w.p[0],lng:w.p[1]});m.setIcon({path:BUSP,scale:1.2,anchor:new google.maps.Point(12,12),fillColor:x?'#d3202f':'#37474f',fillOpacity:1,strokeColor:'#fff',strokeWeight:1.5});m.setZIndex(x?900:10)}else{const g=$('#bus'+i),[px,py]=X(w.p);g.style.transform=`translate(${px}px,${py}px)`;g.classList.toggle('bn',x)}});
+RT.forEach(r=>{const S=BN[r.id],on=!!(S&&S.on),p=on?wh(BUS.find(b=>b.id==S.pair[0])).p:null;if(GM){const z=GBZ[r.id];z.c.setVisible(on);z.m.setVisible(on);if(on){const L={lat:p[0],lng:p[1]};z.c.setCenter(L);z.m.setPosition(L)}}else{const g=$('#bz-'+r.id);g.classList.toggle('on',on);if(on){const[px,py]=X(p);g.style.transform=`translate(${px}px,${py}px)`}}})}
+/* live view */
+const sc=(l,v,s,ic,bad)=>`<div class="card sc ${bad?'bad':''}"><div class="sl"><span>${l}</span><i class="si">${I(ic)}</i></div><b>${v}</b><small>${s}</small></div>`;
+function draw(){drawMap();const S=svc(),nb=RT.filter(r=>BN[r.id]&&BN[r.id].on).length,ac=Math.round(BUS.reduce((a,b)=>a+crowd(b),0)/BUS.length);
+$('#stats').innerHTML=sc('Buses on the move',BUS.length,'Live GPS, every second','bus')+sc('Routes monitored',RT.length,'Across Bengaluru','route')+sc('Service alerts',P(nb),nb?nb+' needs attention':'All clear','warn',nb)+sc('Your saved tickets',P(TK.length),'Ready when you are','ticket');
+{const on=RT.filter(r=>BN[r.id]&&BN[r.id].on),b=$('#bnr');if(!b.dataset.dismissed){b.hidden=!on.length;if(on.length){b.innerHTML=`${I('warn')}<span style="flex:1">Bunching on ${on.map(r=>r.id+' near '+nxt(BUS.find(x=>x.id==BN[r.id].pair[0]))).join(', ')}. Tap to view &bull; <i style="font-size:11px;opacity:.8">slide to dismiss</i></span><button class="ts-close" style="position:static;background:#ffffff33;border:0;color:#fff;border-radius:50%;width:24px;height:24px;font-size:14px;cursor:pointer;line-height:22px;text-align:center" aria-label="Dismiss">&times;</button>`;b.dataset.r=on[0].id;const cb=b.querySelector('.ts-close');if(cb)cb.onclick=(e)=>{e.stopPropagation();b.dataset.dismissed='1';slideDismiss(b,'right',()=>{b.hidden=true;});}}}}
+{const bs=U.role!='Passenger'&&U.bus&&BUS.find(x=>x.id==U.bus),el=$('#my');el.hidden=!bs;if(bs){const S=BN[bs.r],on=S&&S.on,ld=on&&S.pair[1]==bs.id,h=held(bs);el.className='card my'+(h?' hold':'');el.innerHTML=`<small>${U.role} · Bus ${bs.id} · Route ${bs.r} · next stop ${nxt(bs)}</small>`+(bs.opt>0?`<div class="big">WAIT ${bs.opt}s</div><b>Dispatch hold from the optimizer, then move on.</b>`:h?(S.hold>0?`<div class="big">WAIT ${S.hold}s</div><b>Bunching: hold here, then move on.</b>`:`<div class="big">HOLD</div><b>Waiting for a safe gap, then move.</b>`):ld?'<div class="big">KEEP GOING</div><b>Bunching behind you. Keep your normal pace.</b>':on?'<div class="big">WAIT '+Math.max(S.hold,0)+'s</div><b>Bunching on your route: wait, then move.</b>':'<div class="big" style="color:#1b7a3a">ON TIME</div><b>Spacing is good. Bunching orders will appear here.</b>')}}
+$('#lv').textContent='LIVE · '+new Date().toLocaleTimeString('en-IN');
+const q=$('#q').value.trim().toLowerCase();let L=BUS.filter(b=>(!SEL||b.r==SEL)&&(!q||b.r.toLowerCase().includes(q)||b.id.toLowerCase().includes(q)||RM[b.r].s.some(s=>s.toLowerCase().includes(q))));
+$('#bl').innerHTML=L.map(b=>{const w=wh(b),x=bn(b),c=crowd(b);return`<div class="card bi ${x?'bad':''}"><div class="t"><span><span class="rt">${b.r}</span> <b>${b.id}</b></span>${held(b)?`<span class="tg">HOLD ${b.opt>0?b.opt:Math.max(BN[b.r].hold,0)}s</span>`:x?'<span class="tg">BUNCHED</span>':'<small>On time</small>'}</div><small>To ${w.fw?w.r.s[w.r.s.length-1]:w.r.s[0]} · next: ${nxt(b)} · ${Math.round(b.v*720)} km/h</small><div class="bar"><i style="width:${c}%"></i></div><small>Crowding ${c}%</small></div>`}).join('')||'<p class="note">No buses match your search.</p>'}
+function chips(){$('#chips').innerHTML=['All',...RT.map(r=>r.id)].map(x=>`<button class="chip ${(SEL||'All')==x?'on':''}" data-r="${x}">${x=='All'?'All routes':x}</button>`).join('')}
+/* tick */
+function tick(){const T=Date.now()/20000;BUS.forEach((b,i)=>{b.v=b.v0*(1+.5*Math.sin(T+i*1.7))});BUS.forEach(b=>{if(held(b))b.v=0;if(b.opt>0)b.opt--});BUS.forEach(b=>b.pos=(b.pos+b.v)%(2*RM[b.r].L));
+RT.forEach(r=>{const bs=BUS.filter(b=>b.r==r.id).sort((a,c)=>a.pos-c.pos),n=bs.length,L2=2*r.L,S=BN[r.id]||(BN[r.id]={on:false,t:0,pair:[]});let pr=null;
+for(let i=0;i<n&&!pr;i++){const a=bs[i],b=bs[(i+1)%n];if(a!==b&&(b.pos-a.pos+L2)%L2<.9)pr=[a,b]}
+if(pr&&!S.on){S.on=true;S.hold=15;S.pair=[pr[0].id,pr[1].id];alertB(r,pr[0],pr[1])}
+else if(S.on){S.hold--;const a=BUS.find(b=>b.id==S.pair[0]),c=BUS.find(b=>b.id==S.pair[1]);if(S.hold<=0&&(c.pos-a.pos+L2)%L2>=.9){S.on=false;notify(`Route ${r.id}: move now`,`Hold finished. Buses on ${r.id} are spaced out again, so carry on.`,'ok',r.id)}}});draw()}
+function simB(){const r=RT.find(r=>!(BN[r.id]&&BN[r.id].on));if(!r)return toast('Bunching is already active on every route.','w');const L2=2*r.L,bs=BUS.filter(b=>b.r==r.id).sort((a,c)=>a.pos-c.pos);bs[0].pos=(bs[1].pos-.15+L2)%L2;tick()}
+$('#sim').onclick=simB;setInterval(()=>{if(!RT.some(r=>BN[r.id]&&BN[r.id].on))simB()},90000);
+/* voice */
+let REC=null;function mic(inp,cb,btn){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(REC){try{REC.stop()}catch(e){}return}
+if(!SR)return toast('Voice input needs Chrome, Edge or Safari. Type your search instead.','w');const r=REC=new SR();r.lang='en-IN';r.interimResults=true;btn.classList.add('on');
+r.onresult=e=>{inp.value=[...e.results].map(x=>x[0].transcript).join('');cb(e.results[e.results.length-1].isFinal)};
+r.onerror=e=>toast(e.error=='not-allowed'||e.error=='service-not-allowed'?'Microphone is blocked. Allow mic access for this site in your browser settings.':e.error=='no-speech'?'No speech heard. Tap the mic and try again.':'Voice error: '+e.error,'w');
+r.onend=()=>{btn.classList.remove('on');REC=null};try{r.start()}catch(e){REC=null;btn.classList.remove('on')}}
+$('#qm').onclick=()=>mic($('#q'),()=>draw(),$('#qm'));$('#q').oninput=draw;
+/* planner */
+function opts(f,t){const o=[];RT.forEach(r=>{const i=r.s.indexOf(f),j=r.s.indexOf(t);if(i<0||j<0||i==j)return;const sp=i<j?r.cum[i]:2*r.L-r.cum[i],L2=2*r.L,km=Math.abs(r.cum[j]-r.cum[i]);BUS.filter(b=>b.r==r.id).forEach(b=>{const eta=((sp-b.pos+L2)%L2)/(Math.max(b.v,.012)*12);o.push({r,b,eta,ride:km/.35,km,fare:fare(km),bn:BN[r.id]&&BN[r.id].on})})});return o.sort((a,c)=>a.eta-c.eta)}
+const oh=(f,t,o)=>`<div class="card opt"><div class="t"><span><span class="rt">${o.r.id}</span> <b>${o.b.id}</b></span><b>₹${o.fare}</b></div><small>${f} → ${t} · arrives in <b>${fm(o.eta)}</b> · ride ≈ ${Math.round(o.ride)} min · ${o.km.toFixed(1)} km · crowding ${crowd(o.b)}%</small>${o.bn?'<div class="tg">Bunching on this route: the gap after the first bus may be long.</div>':''}<div style="margin-top:8px"><button class="btn" data-buy="${f}|${t}">Buy ticket</button></div></div>`;
+function plan(){const f=$('#pf').value,t=$('#pt').value;if(f==t)return $('#pres').innerHTML='<p class="note">Pick two different stops.</p>';let o=opts(f,t),h='';
+if(o.length)h=`<p class="note">${Math.min(4,o.length)} buses coming, soonest first</p>`+o.slice(0,4).map(x=>oh(f,t,x)).join('');else{const A=opts(f,'Majestic'),B=opts('Majestic',t),a=A[0],b=B[0];h=a&&b?`<p class="note">No direct bus. Change at Majestic:</p><p class="note"><b>${f} → Majestic</b></p>`+A.slice(0,3).map(x=>oh(f,'Majestic',x)).join('')+`<p class="note"><b>Majestic → ${t}</b></p>`+B.slice(0,3).map(x=>oh('Majestic',t,x)).join('')+`<p class="note">Total fare ₹${a.fare+b.fare}</p>`:'<p class="note">No route found.</p>'}$('#pres').innerHTML=h}
+$('#pgo').onclick=plan;$('#sw').onclick=()=>{const a=$('#pf').value;$('#pf').value=$('#pt').value;$('#pt').value=a;plan()};
+/* tickets */
+function qr(s){let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;let o='';for(let y=0;y<21;y++)for(let x=0;x<21;x++){const f=(x<7||x>13)&&(y<7||y>13)&&!(x>13&&y>13);let on;if(f){const m=Math.max(Math.abs(x<7?x-3:x-17),Math.abs(y<7?y-3:y-17));on=m!=2}else{h=(h*1103515245+12345)>>>0;on=(h>>>16)&1}if(on)o+=`<rect x="${x}" y="${y}" width="1" height="1"/>`}return`<svg class="qr" viewBox="0 0 21 21">${o}</svg>`}
+function buy(f,t,n){const o=opts(f,t)[0];let leg=o,fr,rid;if(o){fr=o.fare;rid=o.r.id}else{const a=opts(f,'Majestic')[0],b=opts('Majestic',t)[0];if(!a||!b)return'No route between these stops.';fr=a.fare+b.fare;rid=a.r.id+' + '+b.r.id}
+const k={id:'NP'+Math.random().toString(36).slice(2,8).toUpperCase(),f,t,rid,n:+n,fare:fr*n,ts:Date.now()};TK.unshift(k);st.set('np_tk',TK);renderTk();toast(`<b>Ticket ${k.id} issued</b><br>${f} → ${t} · ₹${k.fare} paid (demo UPI)`,'');return''}
+function renderTk(){$('#tl').innerHTML=TK.length?TK.map(k=>{const ok=Date.now()-k.ts<108e5;return`<div class="card tk ${ok?'':'ex'}">${qr(k.id)}<div><b>${k.f} → ${k.t}</b><br><small>Route ${k.rid} · ${k.n} seat${k.n>1?'s':''} · ₹${k.fare}</small><br><small>${new Date(k.ts).toLocaleString('en-IN')} · ${k.id}</small><br><span class="st">${ok?'ACTIVE · valid 3 hrs':'EXPIRED'}</span></div></div>`}).join(''):'<p class="note">No tickets yet. Choose stops above and pay to get one.</p>'}
+$('#tgo').onclick=()=>{const f=$('#tf').value,t=$('#tt').value;$('#terr').textContent=f==t?'Pick two different stops.':buy(f,t,$('#tn').value)};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-buy]');if(b){const[f,t]=b.dataset.buy.split('|');const m=buy(f,t,1);if(m)toast(m,'w');show('tix')}});
+/* nav */
+function show(v){$$('.v').forEach(s=>s.classList.toggle('on',s.id=='v-'+v));$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));$('#menu').classList.remove('on');if(v=='alerts'){unread=0;badge();renderAl()}if(v=='tix')renderTk();scrollTo(0,0)}
+$$('nav button,#menu button[data-v]').forEach(b=>b.onclick=()=>show(b.dataset.v));$('#bell').onclick=()=>show('alerts');$('#avb').onclick=()=>$('#menu').classList.toggle('on');
+$('#chips').onclick=e=>{const c=e.target.closest('[data-r]');if(c){SEL=c.dataset.r=='All'?'':c.dataset.r;chips();draw()}};
+$('#thm').onclick=()=>{const d=document.documentElement,dk=getComputedStyle(d).colorScheme=='dark';d.dataset.theme=dk?'light':'dark';$('#menu').classList.remove('on')};
+$('#np').onclick=()=>{if(!window.Notification)return toast('This browser does not support notifications.','w');Notification.requestPermission().then(p=>toast(p=='granted'?'Phone notifications on.':'Notifications are blocked in browser settings.','w'))};
+$('#gkb').onclick=()=>{const k=$('#gk').value.trim();if(k){st.set('np_gk',k);location.reload()}};
+/* login */
+$('#roles').onclick=e=>{const c=e.target.closest('.chip');if(c){$$('#roles .chip').forEach(x=>x.classList.toggle('on',x==c));$('#busrow').hidden=c.textContent=='Passenger'}};
+function enter(){$('#login').classList.remove('on');$('#avb').textContent=U.n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()||'G';$('#mi').innerHTML=`<b>${U.n||'Guest'}</b><br>${U.role}${U.bus?' · Bus '+U.bus:''}${U.p?' · +91 '+U.p:''}`;clock();toast(`Welcome${U.n?', '+U.n.split(' ')[0]:''}! ${U.bus?'Bunching orders are on for bus '+U.bus+'.':'Bunching alerts are on.'}`,'w')}
+$('#ln').value=U.n;$('#lp').value=U.p;
+$('#lgo').onclick=()=>{
+  const n=$('#ln').value.trim();
+  const rawPhone=$('#lp').value.trim();
+  const cleanPhone=rawPhone.replace(/\D/g, '').slice(-10);
+  if(!n) return $('#lerr').textContent='Enter your name.';
+  if(cleanPhone.length !== 10) return $('#lerr').textContent='Enter a valid 10-digit mobile number.';
+  const ro=$('#roles .on').textContent;
+  let bus='';
+  if(ro!='Passenger'){
+    const typedBus=$('#lb').value.toUpperCase().replace(/[^A-Z0-9]/g,'');
+    const matched=BUS.find(b=>b.id===typedBus || b.id.includes(typedBus));
+    bus=matched?matched.id:BUS[0].id;
+  }
+  U={n, p: cleanPhone, role: ro, bus};
+  st.set('np_user', U);
+  $('#lerr').textContent='';
+  enter();
+};
+$('#lp').oninput=()=>$('#lerr').textContent='';
+$('#ln').oninput=()=>$('#lerr').textContent='';
+$('#guest').onclick=e=>{e.preventDefault();U={n:'',p:'',role:'Passenger',bus:''};enter()};
+$('#lo').onclick=()=>{$('#menu').classList.remove('on');$('#login').classList.add('on')};
+/* SOS */
+let hold=null;const so=()=>{$('#sos').classList.add('on');$('#sres').textContent=''};$('#sosb').onclick=so;$('#sx').onclick=()=>$('#sos').classList.remove('on');
+function sendSos(){const b=$('#sb').value;let loc='';const done=l=>{$('#sres').innerHTML=`<b style="color:var(--r)">SOS sent.</b> Control room and your emergency contacts have your location${l}. Stay where you are, help is being alerted.`;notify('SOS alert',`${U.n||'A passenger'} needs help on bus ${b}${l}. Nearest crew and control room notified.`,'sos')};
+try{navigator.geolocation.getCurrentPosition(p=>done(` (${p.coords.latitude.toFixed(4)}, ${p.coords.longitude.toFixed(4)})`),()=>done(''),{timeout:3000})}catch(e){done('')}}
+const sb=$('#sbtn'),hs=()=>{sb.textContent='Keep holding';hold=setTimeout(()=>{hold=null;sb.textContent='HOLD';sendSos()},2000)},he=()=>{if(hold){clearTimeout(hold);hold=null;sb.textContent='HOLD'}};
+['mousedown','touchstart'].forEach(e=>sb.addEventListener(e,ev=>{ev.preventDefault();hs()}));['mouseup','mouseleave','touchend','touchcancel'].forEach(e=>sb.addEventListener(e,he));
+/* AI */
+const names=Object.keys(ST);
+function nearest(s){const o=[];RT.forEach(r=>{const i=r.s.indexOf(s);if(i<0)return;BUS.filter(b=>b.r==r.id).forEach(b=>{const L2=2*r.L;const d=Math.min((r.cum[i]-b.pos+L2)%L2,(2*r.L-r.cum[i]-b.pos+L2)%L2);o.push([d/(b.v*12),b,r])})});return o.sort((a,b)=>a[0]-b[0]).slice(0,3)}
+function ai(q){const l=q.toLowerCase(),f=names.filter(n=>l.includes(n.toLowerCase())).sort((a,b)=>l.indexOf(a.toLowerCase())-l.indexOf(b.toLowerCase())),S=svc();
+if(/bunch/.test(l)){const a=RT.filter(r=>BN[r.id]&&BN[r.id].on);return a.length?(focusBz(a[0].id),`Bunching right now on ${a.map(r=>r.id+' near '+nxt(BUS.find(b=>b.id==BN[r.id].pair[0]))).join(', ')}. Buses are running together, so the next gap may be long. Alerts have gone to passengers and crew on those routes. The red marker on the map shows where.`):'No bunching at the moment. All routes have healthy gaps. I’ll alert you the second that changes.'}
+if(/sos|emergency|unsafe|danger/.test(l)){so();return'Opening SOS. Hold the red button for 2 seconds to alert BMTC control. For immediate danger call 112.'}
+if(/crowd|busy|rush|full/.test(l))return`It’s ${S.k.toLowerCase()} right now: buses average about ${S.c}% full, with service every ${S.f} min.`;
+if(/time|date|today|now/.test(l)&&!f.length)return`It’s ${new Date().toLocaleString('en-IN',{dateStyle:'full',timeStyle:'short'})}. ${S.k}: a bus every ${S.f} min.`;
+if(f.length>=2){let a=f[0],b=f[1];if(/\bfrom\b/.test(l)&&l.indexOf(' to ')>-1&&l.indexOf(' to ')<l.indexOf(' from ')){[a,b]=[b,a]}const o=opts(a,b);if(o.length){const x=o[0];return`Take <b>${x.r.id}</b> from ${a} to ${b}. Next bus in ${fm(x.eta)}, ride ≈ ${Math.round(x.ride)} min, fare ₹${x.fare}.${x.bn?' This route has bunching now.':''}`}const c=opts(a,'Majestic')[0],d=opts('Majestic',b)[0];return c&&d?`No direct bus. Take ${c.r.id} to Majestic (₹${c.fare}), then ${d.r.id} to ${b} (₹${d.fare}). Total ₹${c.fare+d.fare}.`:'I couldn’t find a route for those stops.'}
+if(f.length==1){const n=nearest(f[0]);return`Buses to ${f[0]}: `+n.map(x=>`${x[2].id} (${x[1].id}) in ${fm(x[0])}`).join(', ')+'.'}
+if(/ticket|fare|pay/.test(l))return'Open the Tickets tab, pick your stops, and pay with UPI. Your QR ticket is valid for 3 hours. Or tell me “Majestic to Silk Board” for the fare.';
+return'I can check live buses at a stop, plan a trip (“Majestic to Whitefield”), report bunching, fares and crowding. What do you need?'}
+function say(t,c){const d=document.createElement('div');d.className='m '+c;d.innerHTML=t;$('#msgs').appendChild(d);$('#msgs').scrollTop=9e9;return d}
+function ask(q){q=q.trim();if(!q)return;say(q.replace(/</g,'&lt;'),'u');const d=say('…','a');setTimeout(()=>{d.innerHTML=ai(q);$('#msgs').scrollTop=9e9},500)}
+$('#aib').onclick=()=>{$('#ai').classList.add('on');if(!$('#msgs').children.length)say(`Hi${U.n?' '+U.n.split(' ')[0]:''}! I’m Prayana AI. Ask me about live buses, routes, fares or bunching.`,'a')};$('#aix').onclick=()=>$('#ai').classList.remove('on');
+$('#ais').onclick=()=>{ask($('#ai-q').value);$('#ai-q').value=''};$('#ai-q').onkeydown=e=>{if(e.key=='Enter')$('#ais').click()};
+$('#aim').onclick=()=>mic($('#ai-q'),fin=>{if(fin)$('#ais').click()},$('#aim'));$('#ai .chips').onclick=e=>{if(e.target.classList.contains('chip'))ask(e.target.textContent)};
+function renderSN(){const a=ALS[0],el=$('#sn');if(!el)return;el.innerHTML=a?`<div class="card al ${a.k=='ok'?'ok':''}" style="display:flex;gap:12px;background:var(--rl)"><span class="si" style="background:var(--r);color:#fff">${I(a.k=='ok'?'check':'warn')}</span><div><b>${a.title}</b><br>${a.msg}<br><small>${new Date(a.t).toLocaleTimeString('en-IN')}</small><div style="margin-top:8px"><button class="btn" data-alert="0">View alert details</button></div></div></div>`:'<p class="note">All clear. You’ll be notified here the moment buses start bunching.</p>'}
+function focusBz(rid){const S=BN[rid];if(S&&S.on&&GM){const p=wh(BUS.find(b=>b.id==S.pair[0])).p;GM.panTo({lat:p[0],lng:p[1]});GM.setZoom(13)}setTimeout(()=>$('#mapcard').scrollIntoView({behavior:'smooth'}),150)}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-alert]');if(!b)return;const a=ALS[+b.dataset.alert];if(!a)return;$('#dt').textContent=a.title;$('#dm').innerHTML=a.msg+(a.rid&&BN[a.rid]&&BN[a.rid].on?'<p class="note">The red marker on the map shows where the buses are bunched right now.</p>':'');$('#dmap').dataset.rid=a.rid||'';$('#det').classList.add('on')});
+$('#dx').onclick=()=>$('#det').classList.remove('on');$('#dmap').onclick=()=>{$('#det').classList.remove('on');show('live');setTimeout(()=>focusBz($('#dmap').dataset.rid),100)};
+const rs=()=>setTimeout(()=>{if(GM)google.maps.event.trigger(GM,'resize');else{buildMap();draw()}},250);$('#mm').onclick=e=>{const c=e.target.closest('[data-mm]');if(!c)return;MODE=c.dataset.mm;$$('#mm .chip').forEach(x=>x.classList.toggle('on',x==c));buildMap();draw()};$('#bnr').onclick=e=>{if(e.target.closest('.ts-close'))return;focusBz($('#bnr').dataset.r)};$('#full').onclick=()=>{$('.mapw').classList.add('full');rs()};$('#fx').onclick=()=>{$('.mapw').classList.remove('full');rs()};
+{const b=$('#bnr');let bStartX=0,bCurX=0,bDrag=false,bMoved=false;b.addEventListener('touchstart',e=>{if(e.target.closest('.ts-close'))return;bStartX=e.touches[0].clientX;bCurX=0;bDrag=true;bMoved=false;b.classList.add('sliding')},{passive:true});b.addEventListener('touchmove',e=>{if(!bDrag)return;bCurX=e.touches[0].clientX-bStartX;if(Math.abs(bCurX)>5)bMoved=true;b.style.transform=`translateX(${bCurX}px)`;b.style.opacity=`${Math.max(0.1,1-Math.abs(bCurX)/240)}`},{passive:true});b.addEventListener('touchend',()=>{if(!bDrag)return;bDrag=false;b.classList.remove('sliding');if(Math.abs(bCurX)>50){b.dataset.dismissed='1';slideDismiss(b,bCurX>0?'right':'left',()=>{b.hidden=true;b.style.transform='';b.style.opacity=''})}else if(bMoved){b.style.transition='transform .25s ease, opacity .25s ease';b.style.transform='';b.style.opacity=''}})}
+$('#mp').onclick=()=>{$('#menu').classList.remove('on');$('#login').classList.add('on')};$('#qsos').onclick=so;$('#qai').onclick=()=>$('#aib').click();
+
+/* QpiAI-Opt style dispatch optimizer */
+const HOPT=[0,15,30,45];let QLAST=null;
+function qubo(rid){const r=RM[rid],bs=BUS.filter(b=>b.r==rid).sort((a,c)=>a.pos-c.pos),n=bs.length,L2=2*r.L,tg=L2/n,v=bs.reduce((a,b)=>a+b.v0,0)/n,K=HOPT.length,N=n*K,Q=Array.from({length:N},()=>Array(N).fill(0));let c0=0;
+const add=(a,c,w)=>{const ks=Object.keys(a).map(Number);ks.forEach(j=>{Q[j][j]+=w*(a[j]*a[j]+2*c*a[j]);ks.forEach(k=>{if(k>j)Q[j][k]+=w*2*a[j]*a[k]})});c0+=w*c*c};
+const gaps=[];for(let i=0;i<n;i++){const nx=(i+1)%n,g=(bs[nx].pos-bs[i].pos+L2)%L2;gaps.push(g);const a={};for(let k=0;k<K;k++){a[i*K+k]=(a[i*K+k]||0)+v*HOPT[k];a[nx*K+k]=(a[nx*K+k]||0)-v*HOPT[k]}add(a,g-tg,1)}
+for(let i=0;i<n;i++){const a={};for(let k=0;k<K;k++){a[i*K+k]=1;Q[i*K+k][i*K+k]+=.004*HOPT[k]}add(a,-1,5)}
+return{rid,bs,n,K,N,Q,c0,gaps,v,tg}}
+function energy(P,ch){const x=[];ch.forEach((k,i)=>x.push(i*P.K+k));let e=P.c0;x.forEach(a=>{e+=P.Q[a][a];x.forEach(b=>{if(b>a)e+=P.Q[a][b]})});return e}
+const spread=(P,ch)=>{const g=P.gaps.map((g,i)=>g+P.v*(HOPT[ch[i]]-HOPT[ch[(i+1)%P.n]])),m=g.reduce((a,b)=>a+b,0)/P.n;return Math.sqrt(g.reduce((a,b)=>a+(b-m)**2,0)/P.n)/.35};
+async function runOpt(){
+  const rid=$('#qr').value, P=qubo(rid);
+  const sc=$('#qsc')?$('#qsc').value:'Normal Flow';
+  const qkey=($('#qky')?$('#qky').value.trim():'')||(st.get('np_qc',{})?.key||'');
+  $('#qout').innerHTML='<div style="padding:10px;color:var(--mut)"><b>Running Optimizer...</b> Consulting FastAPI & QpiAI QUBO solver...</div>';
+  let backendData=null;
+  try{
+    const res=await fetch(`/api/optimize?scenario=${encodeURIComponent(sc)}&qpiai_key=${encodeURIComponent(qkey)}`);
+    if(res.ok) backendData=await res.json();
+  }catch(e){
+    console.log('FastAPI fetch notice, falling back to local solver.');
+  }
+  let ch=null;
+  if(!backendData){
+    try{if(window.QPIAI_SOLVER)ch=await window.QPIAI_SOLVER(P)}catch(e){toast('QpiAI notice, using local demo solver.','w')}
+    if(!Array.isArray(ch)){
+      let best=1e9;const c=Array(P.n).fill(0);
+      (function go(i){if(i==P.n){const e=energy(P,c);if(e<best){best=e;ch=c.slice()}return}for(let k=0;k<P.K;k++){c[i]=k;go(i+1)}})(0);
+    }
+  }else{
+    ch=P.bs.map(b=>{
+      const act=(backendData.solver_decision.actions||[]).find(a=>a.bus_id===b.id||a.bus_id.includes(b.r));
+      const dur=act?act.duration_sec:(backendData.solver_decision.actions?.[0]?.duration_sec||20);
+      let bestIdx=0,minDiff=999;
+      HOPT.forEach((h,idx)=>{if(Math.abs(h-dur)<minDiff){minDiff=Math.abs(h-dur);bestIdx=idx}});
+      return bestIdx;
+    });
+  }
+  QLAST={P,ch,backendData};
+  const b0=spread(P,Array(P.n).fill(0)),b1=spread(P,ch);
+  let bkInfo='';
+  if(backendData){
+    const qw=backendData.predictions?.[0]?.theta_future||1.85;
+    const qp=backendData.predictions?.[0]?.predicted_queue_passengers||45;
+    bkInfo=`<div style="background:var(--rl);border:1px solid var(--r);border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:12px"><b style="color:var(--r)">✓ FastAPI Backend Connected</b> &bull; Scenario: <b>${backendData.scenario}</b><br><span style="color:var(--mut)">Solver: ${backendData.solver_decision.solver} (${backendData.solver_decision.total_optimized_buses} buses) &bull; Quantum Traffic Weight (&theta;<sub>future</sub>): ${qw} &bull; Queue Pressure: ${qp} commuters</span></div>`;
+  }
+  let alertSnippet='';
+  if(backendData?.trilingual_alerts?.length){
+    const a0=backendData.trilingual_alerts[0];
+    alertSnippet=`<div style="margin-top:8px;background:var(--card);border:1px dashed var(--ln);border-radius:8px;padding:8px 10px;font-size:12px"><b style="color:var(--ink)">Multilingual Commuter Dispatch Alerts:</b><div style="margin-top:4px"><span style="color:var(--mut)">English:</span> ${a0.english}</div><div style="margin-top:2px"><span style="color:var(--mut)">ಕನ್ನಡ:</span> ${a0.kannada}</div><div style="margin-top:2px"><span style="color:var(--mut)">हिंदी:</span> ${a0.hindi}</div></div>`;
+  }
+  $('#qout').innerHTML=`${bkInfo}<table class="qt"><tr><th>Bus</th><th>Hold</th><th>Target Stop</th></tr>${P.bs.map((b,i)=>`<tr><td>${b.id}</td><td><b>${HOPT[ch[i]]?'wait '+HOPT[ch[i]]+' s, then move':'keep moving'}</b></td><td>${backendData?.solver_decision?.actions?.[i]?.target_stop||nxt(b)}</td></tr>`).join('')}</table><small>Gap spread: ${b0.toFixed(1)} min &rarr; <b>${b1.toFixed(1)} min</b> &bull; ${P.N} binary variables</small>${alertSnippet}<div style="margin-top:8px"><button class="btn" id="qapp">Send hold orders</button></div>`;
+  $('#qapp').onclick=()=>{
+    P.bs.forEach((b,i)=>b.opt=HOPT[ch[i]]);
+    const mine=P.bs.findIndex(b=>b.id==U.bus),h=P.bs.filter((b,i)=>HOPT[ch[i]]).map(b=>b.id+' '+b.opt+'s').join(', ')||'none needed';
+    if(backendData?.trilingual_alerts){
+      backendData.trilingual_alerts.slice(0,3).forEach(al=>{
+        ALS.unshift({title:`Headway Hold: ${al.bus_id}`,msg:`${al.english}<br><br><i>${al.kannada}</i><br><i>${al.hindi}</i>`,rid:P.rid,t:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),sev:'ok'});
+      });
+      renderAl();
+    }
+    notify(`Optimizer plan for ${P.rid}`,(mine>-1&&U.role!='Passenger'&&HOPT[ch[mine]]?`Your bus ${U.bus}: wait ${HOPT[ch[mine]]} seconds, then move. `:'')+`Hold orders: ${h}.`,'ok',P.rid);
+  };
+}
+$('#qrun').onclick=runOpt;
+fetch('/api/fleet').then(r=>r.ok?r.json():null).then(d=>{if(d&&d.fleet){const tag=$('#qp .tag');if(tag)tag.textContent=`FastAPI + QpiAI Live (${d.fleet.length} vehicles)`}}).catch(()=>{});
+function qcSet(on){const el=$('#qst');if(on){window.QPIAI_SOLVER=async P=>{const c=st.get('np_qc',null);if(!c)return null;const r=await fetch(c.ep,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+c.key},body:JSON.stringify({problem:'bus-bunching-dispatch',route:P.rid,buses:P.bs.map(b=>b.id),hold_options_s:HOPT,variables:P.N,constant:P.c0,Q:P.Q})});if(!r.ok)throw new Error('HTTP '+r.status);const j=await r.json(),a=Array.isArray(j)?j:j.choices||j.solution||j.result;if(!Array.isArray(a)||a.length!=P.n)throw new Error('bad response');return a.map(x=>Math.max(0,Math.min(HOPT.length-1,x|0)))};el.textContent='Solver: QpiAI Cloud (connected)'}else{delete window.QPIAI_SOLVER;el.textContent='Solver: local demo (in your browser)'}}
+$('#qcon').onclick=()=>{const ep=$('#qep').value.trim(),key=$('#qky').value.trim();if(!/^https:\/\//.test(ep)||!key)return toast('Enter an https endpoint URL and your API key.','w');st.set('np_qc',{ep,key});qcSet(true);toast('QpiAI Cloud connected. Optimize will now use it.','w')};
+$('#qdis').onclick=()=>{st.set('np_qc',null);qcSet(false);$('#qep').value='';$('#qky').value='';toast('Back to the local demo solver.','w')};
+{const c=st.get('np_qc',null);if(c){$('#qep').value=c.ep;qcSet(true)}}
+$('#qexp').onclick=()=>{const P=qubo($('#qr').value),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({problem:'bus-bunching-dispatch',route:P.rid,buses:P.bs.map(b=>b.id),hold_options_s:HOPT,variables:P.N,constant:P.c0,Q:P.Q},null,1)],{type:'application/json'}));a.download='namma-prayana-qubo-'+P.rid+'.json';a.click();toast('QUBO exported for QpiAI-Opt.','w')};
+$('#qr').innerHTML=RT.map(r=>`<option>${r.id}</option>`).join('');
+/* init */
+$('#bl2').innerHTML=BUS.map(b=>`<option value="${b.id}">Route ${b.r}</option>`).join('');
+const hh=()=>{const d=document.documentElement.style;d.setProperty("--hh",$("header").offsetHeight+"px");d.setProperty("--nh",$("nav").offsetHeight+"px")};hh();addEventListener("resize",hh);
+const opt=names.sort().map(n=>`<option>${n}</option>`).join('');['#pf','#pt','#tf','#tt'].forEach(s=>$(s).innerHTML=opt);$('#pf').value='Majestic';$('#pt').value='Whitefield';$('#tf').value='Majestic';$('#tt').value='Silk Board';
+$('#sb').innerHTML=BUS.map(b=>`<option>${b.id}</option>`).join('');
+buildMap();chips();renderAl();renderTk();clock();tick();setInterval(tick,1000);setInterval(clock,1000);
+/* ---- big bus scene (front page + login) ---- */
+function skyline(seed,minH,maxH){let x=0,d='',k=seed;const r=()=>(k=(k*9301+49297)%233280)/233280;d+='M0 100';while(x<600){const w=18+r()*34,h=minH+r()*(maxH-minH);d+=`V${100-h}H${x+w}V100`;x+=w+2}return`<path d="${d}V100Z"/>`}
+function bigBus(){const win=[0,1,2,3,4].map(i=>`<rect x="${22+i*38}" y="26" width="32" height="30" rx="4" fill="#cfe9f7" stroke="#7a0a12" stroke-width="1.5"/>`).join('');
+const wheel=cx=>`<path d="M${cx-20} 100a20 20 0 0 1 40 0z" fill="#7a0a12"/><g transform="translate(${cx} 100)"><g class="wh"><circle r="15" fill="#263238"/><circle r="7" fill="#cfd8dc"/><path d="M0-7V7M-7 0H7" stroke="#263238" stroke-width="2"/></g></g>`;
+return`<svg viewBox="0 0 300 120" role="img" aria-label="BMTC bus driving"><ellipse cx="150" cy="116" rx="130" ry="4" fill="#0004"/><rect x="6" y="14" width="288" height="82" rx="14" fill="#d3202f"/><rect x="14" y="8" width="272" height="11" rx="5" fill="#a3121d"/><rect x="6" y="64" width="288" height="12" fill="#fff"/><rect x="6" y="84" width="288" height="12" rx="4" fill="#a3121d"/>${win}<rect x="214" y="26" width="30" height="58" rx="3" fill="#8ccbe8" stroke="#7a0a12" stroke-width="1.5"/><path d="M229 26v58" stroke="#7a0a12" stroke-width="1.5"/><path d="M252 24h30a6 6 0 0 1 6 6v34h-36z" fill="#cfe9f7" stroke="#7a0a12" stroke-width="1.5"/><rect x="256" y="12" width="28" height="10" rx="2" fill="#111"/><text x="270" y="20" text-anchor="middle" font-size="8" font-weight="800" fill="#ffb300" font-family="sans-serif">500D</text><text x="120" y="73" text-anchor="middle" font-size="9" font-weight="800" fill="#a3121d" font-family="sans-serif" letter-spacing="1.5">NAMMA PRAYANA · BMTC</text><circle cx="291" cy="82" r="5" fill="#ffe082"/><rect x="4" y="74" width="4" height="9" rx="1" fill="#ffb300"/>${wheel(62)}${wheel(236)}</svg>`}
+function busScene(cls){const a=skyline(7,30,95)+'',b=skyline(21,18,60);return`<div class="sc3 ${cls||''}"><div class="sun"></div><div class="city far"><svg viewBox="0 0 600 100" preserveAspectRatio="none">${a}</svg><svg viewBox="0 0 600 100" preserveAspectRatio="none">${a}</svg></div><div class="city near"><svg viewBox="0 0 600 100" preserveAspectRatio="none">${b}</svg><svg viewBox="0 0 600 100" preserveAspectRatio="none">${b}</svg></div><div class="road"><i></i></div><div class="bigbus">${bigBus()}</div></div>`}
+{const h=document.getElementById('heroScene'),l=document.getElementById('loginScene');if(h)h.innerHTML=busScene('');if(l)l.innerHTML=busScene('sm')}
+
+/* ---- moving map: camera glides along with the buses ---- */
+let CAM_ON=true,CAM={x:0,y:0,z:1},CAM_PAN=0,CAM_LBL='';
+function camBus(){for(const r of RT){const S=BN[r.id];if(S&&S.on){const b=BUS.find(x=>x.id==S.pair[0]);if(b)return b}}
+const pool=(typeof SEL!=='undefined'&&SEL)?BUS.filter(b=>b.r==SEL):BUS;return pool[Math.floor(Date.now()/7000)%pool.length]||BUS[0]}
+function camPx(b,W,H){const[x,y]=X(wh(b).p);if(MODE=='simple'){const s=Math.max(W/480,H/580);return[x*s+(W-480*s)/2,y*s+(H-580*s)/2]}return[x,y]}
+function camLabel(b){const t=CAM_ON?'Moving map: follows '+(b?b.r+' · '+b.id.slice(-4):'bus'):'Moving map: off';const el=document.getElementById('camb');if(el&&CAM_LBL!==t){CAM_LBL=t;el.textContent=t;el.classList.toggle('off',!CAM_ON)}}
+function camFrame(){requestAnimationFrame(camFrame);
+const m=document.querySelector('.mapw'),f=document.getElementById('gf'),sv=document.getElementById('map');if(!m||!f||!sv)return;
+const b=camBus();camLabel(b);
+if(GM){if(CAM_ON&&b&&Date.now()-CAM_PAN>2500){CAM_PAN=Date.now();const p=wh(b).p;GM.panTo({lat:p[0],lng:p[1]})}return}
+const W=m.clientWidth,H=m.clientHeight;if(!W||!H)return;
+let tz=1,tx=0,ty=0;
+if(CAM_ON&&b){tz=1.5;const[px,py]=camPx(b,W,H);tx=Math.min(0,Math.max(W-tz*W,W/2-tz*px));ty=Math.min(0,Math.max(H-tz*H,H/2-tz*py))}
+const k=.05;CAM.x+=(tx-CAM.x)*k;CAM.y+=(ty-CAM.y)*k;CAM.z+=(tz-CAM.z)*k;
+const tr=`translate(${CAM.x.toFixed(2)}px,${CAM.y.toFixed(2)}px) scale(${CAM.z.toFixed(4)})`;f.style.transform=tr;sv.style.transform=tr}
+document.getElementById('camb').onclick=()=>{CAM_ON=!CAM_ON;CAM_LBL=''};
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)requestAnimationFrame(camFrame);else{CAM_ON=false;camLabel(null)}
+
+{const k=st.get('np_gk','')||GKEY;if(k){const s=document.createElement('script');s.src='https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(k)+'&callback=gInit';s.onerror=()=>toast('Google Maps could not load here. Showing the demo map.','w');document.head.appendChild(s)}}
+</script></body></html>
