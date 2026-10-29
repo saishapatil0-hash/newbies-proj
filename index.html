@@ -469,7 +469,7 @@ async function runOpt(){
   $('#qout').innerHTML='<div style="padding:10px;color:var(--mut)"><b>Running Optimizer...</b> Consulting FastAPI & QpiAI QUBO solver...</div>';
   let backendData=null;
   try{
-    const res=await fetch(`/api/optimize?scenario=${encodeURIComponent(sc)}&qpiai_key=${encodeURIComponent(qkey)}`);
+    const res=await fetch(`/api/optimize?scenario=${encodeURIComponent(sc)}`,{headers:{'X-QpiAI-Key':qkey}});
     if(res.ok) backendData=await res.json();
   }catch(e){
     console.log('FastAPI fetch notice, falling back to local solver.');

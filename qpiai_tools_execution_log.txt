@@ -1,40 +1,16 @@
 ================================================================================
              QPIAI QUANTUM & OPTIMIZATION TOOLS - EXECUTION LOG               
-Generated: 2026-10-30 03:15:14
+Generated: 2026-10-30 03:49:00
 ================================================================================
 
 --------------------------------------------------------------------------------
 TOOL 1: QpiAI Quantum Cloud Authentication & Resource Discovery
 --------------------------------------------------------------------------------
 [SDK] qpiai-quantum v0.7.5
-[AUTH] API Key: 316eccb2...24115b10
-[AUTH] Status: 200 OK - Authentication Successful! Connected to QpiAI Cloud.
-[RESOURCES] Discovered Quantum Compute Backends on QpiAI Cloud:
-Available Compute Resources:
-
-Backend: QpiAI-QSV-Simulator
-  Device Name: QpiAI-QSV-Simulator
-  Usage Rate: 1 credits
-
-Backend: QpiAI-QDM-Simulator
-  Device Name: QpiAI-QDM-Simulator
-  Usage Rate: 2 credits
-
-Backend: QpiAI-QTN-Simulator
-  Device Name: QpiAI-QTN-Simulator
-  Usage Rate: 3 credits
-
-Backend: QpiAI-QSV-Lite
-  Device Name: QpiAI-QSV-Lite
-  Usage Rate: 1 credits
-
-Backend: QpiAI-QDM-Lite
-  Device Name: QpiAI-QDM-Lite
-  Usage Rate: 2 credits
-
-Backend: QpiAI-Indus-1
-  Device Name: QpiAI-Indus-1
-  Usage Rate: 4 credits
+[AUTH] Status: not attempted (QPIAI_API_KEY is not configured)
+[RESOURCES] Lookup response time: 0.0 ms
+[RESOURCES] Resource lookup result:
+No authenticated cloud resource lookup was performed.
 
 
 --------------------------------------------------------------------------------
@@ -43,8 +19,9 @@ TOOL 2: Parameterized Quantum Circuit Execution (QpiAI Circuit Engine)
 [CIRCUIT ARCHITECTURE]
   Qubits: 3 | Classical Bits: 3
   Gates: H(0), H(1), H(2) -> CX(0,1), CX(1,2) -> Rz(0, theta=congestion*1.57) -> MeasureAll
-  Target Device: QpiAI-QSV-Simulator (Statevector Simulator)
+  Target Device: QpiAI-QSV-Simulator when cloud auth succeeds; otherwise QpiAI-QSV-Local
   Shots: 1024
+  Timing values below are client-observed wall-clock milliseconds, not QPU-only execution time.
   Circuit Representation (QASM 2.0 / QpiAI IR):
     OPENQASM 2.0;
     include "qelib1.inc";
@@ -54,28 +31,37 @@ TOOL 2: Parameterized Quantum Circuit Execution (QpiAI Circuit Engine)
     cx q[0], q[1]; cx q[1], q[2];
     rz(congestion_factor * 1.57) q[0];
     measure q[0] -> c[0]; measure q[1] -> c[1]; measure q[2] -> c[2];
-  Execution Run -> Congestion Factor: 1.5 | Quantum Traffic Weight (theta_future): 1.85
-  Execution Run -> Congestion Factor: 3.5 | Quantum Traffic Weight (theta_future): 1.85
-  Execution Run -> Congestion Factor: 7.0 | Quantum Traffic Weight (theta_future): 1.85
+  Execution Run -> Congestion Factor: 1.5 | Status: fallback | Mode: local_fallback | Backend: local numeric fallback | theta_future: 1.85
+    Response: 0.438 ms | Auth: 0.0 ms | Execution: 0.0 ms | Shots: 1024 | Dominant State: None
+    Fallback reason: ValueError
+  Execution Run -> Congestion Factor: 3.5 | Status: fallback | Mode: local_fallback | Backend: local numeric fallback | theta_future: 1.85
+    Response: 0.429 ms | Auth: 0.0 ms | Execution: 0.0 ms | Shots: 1024 | Dominant State: None
+    Fallback reason: ValueError
+  Execution Run -> Congestion Factor: 7.0 | Status: fallback | Mode: local_fallback | Backend: local numeric fallback | theta_future: 1.85
+    Response: 0.3 ms | Auth: 0.0 ms | Execution: 0.0 ms | Shots: 1024 | Dominant State: None
+    Fallback reason: ValueError
 
 
 --------------------------------------------------------------------------------
-TOOL 3: QpiAI-Opt QUBO Micro-Buffer Headway Recovery Solver
+TOOL 3: Fleet Dispatch Model
 --------------------------------------------------------------------------------
-[FORMULATION] QUBO Matrix Optimization for Headway Variance Minimization
-  Binary variables: N = (Buses * Discrete Hold Options)
-  Discrete Hold Options: [0s, 15s, 30s, 45s]
-  Cost Objective: Minimize (gap[i] - target_gap)^2 across corridor with hold penalties
-  Solver Engine: QpiAI-Opt QUBO Engine
+[MODEL] Local delay-threshold dispatch heuristic (not a QpiAI-Opt cloud solver)
+  Traffic Model: QpiAI 3-qubit traffic-penalty circuit (not a trained ML model) | Mode: local_fallback | Backend: local numeric fallback
+  Traffic Model Response Time: 0.256 ms
+  Prediction Calculation Time: 0.609 ms
+  Solver Engine: Local delay-threshold dispatch heuristic
+  Dispatch Model: Delay-threshold dispatch heuristic (local)
   Convergence Status: Success
+  Dispatch Response Time: 0.345 ms
+  Prediction + Dispatch Wall Time: 1.171 ms
   Total Optimized Vehicles: 8
   Selected Dispatch Micro-Hold Actions:
-    - Bus ID: BMTC-500D-01 | Target Stop: Silk Board | Recommended Micro-Hold: 45s | Status: Optimal Convergence Achieved
-    - Bus ID: BMTC-500D-02 | Target Stop: Marathahalli | Recommended Micro-Hold: 45s | Status: Optimal Convergence Achieved
-    - Bus ID: BMTC-258A-01 | Target Stop: Hebbal | Recommended Micro-Hold: 45s | Status: Optimal Convergence Achieved
-    - Bus ID: BMTC-258A-02 | Target Stop: Yelahanka | Recommended Micro-Hold: 45s | Status: Optimal Convergence Achieved
-    - Bus ID: BMTC-335E-01 | Target Stop: Majestic | Recommended Micro-Hold: 45s | Status: Optimal Convergence Achieved
-    - Bus ID: BMTC-335E-02 | Target Stop: Whitefield | Recommended Micro-Hold: 45s | Status: Optimal Convergence Achieved
+    - Bus ID: BMTC-500D-01 | Vehicle Type: AC Vajra | Target Stop: Silk Board | Recommended Micro-Hold: 45s | Status: Local heuristic decision
+    - Bus ID: BMTC-500D-02 | Vehicle Type: AC Vajra | Target Stop: Marathahalli | Recommended Micro-Hold: 45s | Status: Local heuristic decision
+    - Bus ID: BMTC-258A-01 | Vehicle Type: Ordinary | Target Stop: Hebbal | Recommended Micro-Hold: 45s | Status: Local heuristic decision
+    - Bus ID: BMTC-258A-02 | Vehicle Type: Ordinary | Target Stop: Yelahanka | Recommended Micro-Hold: 45s | Status: Local heuristic decision
+    - Bus ID: BMTC-335E-01 | Vehicle Type: Vayu Vajra | Target Stop: Majestic | Recommended Micro-Hold: 45s | Status: Local heuristic decision
+    - Bus ID: BMTC-335E-02 | Vehicle Type: Vayu Vajra | Target Stop: Whitefield | Recommended Micro-Hold: 45s | Status: Local heuristic decision
 
 
 --------------------------------------------------------------------------------

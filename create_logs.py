@@ -3,6 +3,7 @@ import sys
 import os
 import io
 import datetime
+import time
 
 # Ensure UTF-8 output
 try:
@@ -16,7 +17,7 @@ sys.path.insert(0, BASE_DIR)
 
 from qpiai_quantum import QpiAIQuantumAuth
 from data import FleetDataset, get_vehicle_fleet_inventory
-from predictive_engine import predict_future_bunching
+from predictive_engine import predict_future_bunching_with_telemetry
 from qubo_buffer_solver import solve_micro_buffer_qubo
 from alert_generator import generate_bilingual_alerts
 import qcloud_circuit
@@ -24,15 +25,27 @@ import qcloud_circuit
 timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 # Capture Tool 1: QpiAI Cloud Authentication & Resources
-api_key = "316eccb24aa7549ccce98ad2e0716d7768e10d3fbce75d88b20b774424115b10"
-masked_key = api_key[:8] + "..." + api_key[-8:]
-
-old_stdout = sys.stdout
-sys.stdout = buffer = io.StringIO()
-QpiAIQuantumAuth.login(api_key=api_key)
-QpiAIQuantumAuth.list_compute_resources()
-sys.stdout = old_stdout
-resource_output = buffer.getvalue()
+api_key = os.getenv("QPIAI_API_KEY")
+resource_status = "not attempted (QPIAI_API_KEY is not configured)"
+resource_output = "No authenticated cloud resource lookup was performed."
+resource_lookup_time_ms = 0.0
+if api_key:
+    old_stdout = sys.stdout
+    buffer = io.StringIO()
+    resource_started_at = time.perf_counter()
+    try:
+        sys.stdout = buffer
+        QpiAIQuantumAuth.login(api_key=api_key)
+        QpiAIQuantumAuth.list_compute_resources()
+        resource_status = "success"
+    except Exception as error:
+        resource_status = f"failed ({type(error).__name__})"
+    finally:
+        sys.stdout = old_stdout
+        resource_lookup_time_ms = round(
+            (time.perf_counter() - resource_started_at) * 1000, 3
+        )
+        resource_output = buffer.getvalue().strip() or "SDK returned no resource details."
 
 tool_log_lines = []
 tool_log_lines.append("================================================================================")
@@ -44,10 +57,10 @@ tool_log_lines.append("---------------------------------------------------------
 tool_log_lines.append("TOOL 1: QpiAI Quantum Cloud Authentication & Resource Discovery")
 tool_log_lines.append("--------------------------------------------------------------------------------")
 tool_log_lines.append("[SDK] qpiai-quantum v0.7.5")
-tool_log_lines.append(f"[AUTH] API Key: {masked_key}")
-tool_log_lines.append("[AUTH] Status: 200 OK - Authentication Successful! Connected to QpiAI Cloud.")
-tool_log_lines.append("[RESOURCES] Discovered Quantum Compute Backends on QpiAI Cloud:")
-tool_log_lines.append(resource_output.strip())
+tool_log_lines.append(f"[AUTH] Status: {resource_status}")
+tool_log_lines.append(f"[RESOURCES] Lookup response time: {resource_lookup_time_ms} ms")
+tool_log_lines.append("[RESOURCES] Resource lookup result:")
+tool_log_lines.append(resource_output)
 tool_log_lines.append("\n")
 
 tool_log_lines.append("--------------------------------------------------------------------------------")
@@ -56,8 +69,9 @@ tool_log_lines.append("---------------------------------------------------------
 tool_log_lines.append("[CIRCUIT ARCHITECTURE]")
 tool_log_lines.append("  Qubits: 3 | Classical Bits: 3")
 tool_log_lines.append("  Gates: H(0), H(1), H(2) -> CX(0,1), CX(1,2) -> Rz(0, theta=congestion*1.57) -> MeasureAll")
-tool_log_lines.append("  Target Device: QpiAI-QSV-Simulator (Statevector Simulator)")
+tool_log_lines.append("  Target Device: QpiAI-QSV-Simulator when cloud auth succeeds; otherwise QpiAI-QSV-Local")
 tool_log_lines.append("  Shots: 1024")
+tool_log_lines.append("  Timing values below are client-observed wall-clock milliseconds, not QPU-only execution time.")
 tool_log_lines.append("  Circuit Representation (QASM 2.0 / QpiAI IR):")
 tool_log_lines.append("    OPENQASM 2.0;")
 tool_log_lines.append("    include \"qelib1.inc\";")
@@ -70,29 +84,65 @@ tool_log_lines.append("    measure q[0] -> c[0]; measure q[1] -> c[1]; measure q
 
 # Test traffic congestion circuit runs
 for cong in [1.5, 3.5, 7.0]:
-    theta = qcloud_circuit.run_traffic_penalty_circuit(congestion_factor=cong)
-    tool_log_lines.append(f"  Execution Run -> Congestion Factor: {cong:.1f} | Quantum Traffic Weight (theta_future): {theta}")
+    circuit_result = qcloud_circuit.run_traffic_penalty_circuit(
+        congestion_factor=cong,
+        api_key=api_key,
+    )
+    tool_log_lines.append(
+        f"  Execution Run -> Congestion Factor: {cong:.1f} | "
+        f"Status: {circuit_result['status']} | Mode: {circuit_result['execution_mode']} | "
+        f"Backend: {circuit_result['backend'] or 'local numeric fallback'} | "
+        f"theta_future: {circuit_result['theta_future']}"
+    )
+    tool_log_lines.append(
+        f"    Response: {circuit_result['response_time_ms']} ms | "
+        f"Auth: {circuit_result['authentication_time_ms']} ms | "
+        f"Execution: {circuit_result['execution_time_ms']} ms | "
+        f"Shots: {circuit_result['shots']} | Dominant State: {circuit_result['dominant_state']}"
+    )
+    if circuit_result["fallback_reason"]:
+        tool_log_lines.append(f"    Fallback reason: {circuit_result['fallback_reason']}")
 
 tool_log_lines.append("\n")
 tool_log_lines.append("--------------------------------------------------------------------------------")
-tool_log_lines.append("TOOL 3: QpiAI-Opt QUBO Micro-Buffer Headway Recovery Solver")
+tool_log_lines.append("TOOL 3: Fleet Dispatch Model")
 tool_log_lines.append("--------------------------------------------------------------------------------")
-tool_log_lines.append("[FORMULATION] QUBO Matrix Optimization for Headway Variance Minimization")
-tool_log_lines.append("  Binary variables: N = (Buses * Discrete Hold Options)")
-tool_log_lines.append("  Discrete Hold Options: [0s, 15s, 30s, 45s]")
-tool_log_lines.append("  Cost Objective: Minimize (gap[i] - target_gap)^2 across corridor with hold penalties")
+tool_log_lines.append("[MODEL] Local delay-threshold dispatch heuristic (not a QpiAI-Opt cloud solver)")
 
 ds_test = FleetDataset(scenario="Heavy Rush Hour")
 payload_test = ds_test.get_fleet_payload()
-preds_test = predict_future_bunching(payload_test)
+prediction_started_at = time.perf_counter()
+preds_test, prediction_telemetry = predict_future_bunching_with_telemetry(
+    payload_test,
+    api_key=api_key,
+)
 solver_res = solve_micro_buffer_qubo(preds_test)
+tool_log_lines.append(
+    f"  Traffic Model: {prediction_telemetry['traffic_model']['model']} | "
+    f"Mode: {prediction_telemetry['traffic_model']['execution_mode']} | "
+    f"Backend: {prediction_telemetry['traffic_model']['backend'] or 'local numeric fallback'}"
+)
+tool_log_lines.append(
+    f"  Traffic Model Response Time: "
+    f"{prediction_telemetry['traffic_model']['response_time_ms']} ms"
+)
+tool_log_lines.append(
+    f"  Prediction Calculation Time: "
+    f"{prediction_telemetry['prediction_calculation_time_ms']} ms"
+)
 
 tool_log_lines.append(f"  Solver Engine: {solver_res['solver']}")
+tool_log_lines.append(f"  Dispatch Model: {solver_res['model']}")
 tool_log_lines.append(f"  Convergence Status: {solver_res['status']}")
+tool_log_lines.append(f"  Dispatch Response Time: {solver_res['response_time_ms']} ms")
+tool_log_lines.append(
+    f"  Prediction + Dispatch Wall Time: "
+    f"{round((time.perf_counter() - prediction_started_at) * 1000, 3)} ms"
+)
 tool_log_lines.append(f"  Total Optimized Vehicles: {solver_res['total_optimized_buses']}")
 tool_log_lines.append("  Selected Dispatch Micro-Hold Actions:")
 for act in solver_res['actions'][:6]:
-    tool_log_lines.append(f"    - Bus ID: {act['bus_id']} | Target Stop: {act['target_stop']} | Recommended Micro-Hold: {act['duration_sec']}s | Status: {act['qubo_status']}")
+    tool_log_lines.append(f"    - Bus ID: {act['bus_id']} | Vehicle Type: {act['vehicle_type']} | Target Stop: {act['target_stop']} | Recommended Micro-Hold: {act['duration_sec']}s | Status: {act['qubo_status']}")
 
 tool_log_lines.append("\n")
 tool_log_lines.append("--------------------------------------------------------------------------------")
@@ -133,9 +183,13 @@ web_log_lines.append("2. SCENARIO DISPATCH RUNS TEST DATA (Normal Flow, Heavy Ru
 web_log_lines.append("--------------------------------------------------------------------------------")
 
 for sc in ["Normal Flow", "Heavy Rush Hour", "Accident Delay"]:
+    scenario_started_at = time.perf_counter()
     ds = FleetDataset(scenario=sc)
     pl = ds.get_fleet_payload()
-    preds = predict_future_bunching(pl)
+    preds, scenario_telemetry = predict_future_bunching_with_telemetry(
+        pl,
+        api_key=api_key,
+    )
     sol = solve_micro_buffer_qubo(preds)
     als = generate_bilingual_alerts(sol)
     
@@ -144,10 +198,26 @@ for sc in ["Normal Flow", "Heavy Rush Hour", "Accident Delay"]:
     web_log_lines.append(f"    Active Fleet Sample: {len(pl['fleet'])} buses monitored")
     web_log_lines.append(f"    Calculated Quantum Penalty Weight (theta_future): {preds[0]['theta_future']}")
     web_log_lines.append(f"    Projected 20-min Transfer Hub Queue: {preds[0]['predicted_queue_passengers']} commuters waiting")
-    web_log_lines.append(f"    QUBO Solver Status: {sol['status']} ({sol['total_optimized_buses']} buses optimized)")
+    web_log_lines.append(f"    Dispatch Status: {sol['status']} ({sol['total_optimized_buses']} buses processed)")
+    web_log_lines.append(f"    Dispatch Model: {sol['model']}")
+    web_log_lines.append(
+        f"    Traffic Model: {scenario_telemetry['traffic_model']['model']} | "
+        f"Mode: {scenario_telemetry['traffic_model']['execution_mode']} | "
+        f"Backend: {scenario_telemetry['traffic_model']['backend'] or 'local numeric fallback'}"
+    )
+    web_log_lines.append(
+        f"    Response Times (ms): traffic model="
+        f"{scenario_telemetry['traffic_model']['response_time_ms']}, "
+        f"prediction={scenario_telemetry['prediction_calculation_time_ms']}, "
+        f"dispatch={sol['response_time_ms']}"
+    )
+    web_log_lines.append(
+        f"    Full Scenario Calculation Time: "
+        f"{round((time.perf_counter() - scenario_started_at) * 1000, 3)} ms"
+    )
     web_log_lines.append("    Sample Headway Hold Orders:")
     for act in sol['actions'][:4]:
-        web_log_lines.append(f"      * Bus: {act['bus_id']} at {act['target_stop']} -> Hold: {act['duration_sec']}s ({act['qubo_status']})")
+        web_log_lines.append(f"      * Bus: {act['bus_id']} | Vehicle Type: {act['vehicle_type']} at {act['target_stop']} -> Hold: {act['duration_sec']}s ({act['qubo_status']})")
     web_log_lines.append("    Sample Commuter Multilingual Alert:")
     web_log_lines.append(f"      * English: {als[0]['english']}")
     web_log_lines.append(f"      * Kannada: {als[0]['kannada']}")

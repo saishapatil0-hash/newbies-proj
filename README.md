@@ -1,6 +1,6 @@
 # Namma Prayana - BMTC Live Transit & Quantum Headway Recovery
 
-A unified, full-stack transit dispatch and headway optimization platform for Bengaluru Metropolitan Transport Corporation (BMTC). The application integrates a single-page interactive transit web frontend with a high-performance Python FastAPI backend, utilizing QpiAI quantum circuits and QUBO (Quadratic Unconstrained Binary Optimization) micro-buffer solvers to mitigate bus bunching and broadcast trilingual alerts (English, Kannada, Hindi).
+A unified, full-stack transit dispatch and headway optimization platform for Bengaluru Metropolitan Transport Corporation (BMTC). The application integrates a single-page interactive transit web frontend with a Python FastAPI backend, a QpiAI quantum circuit for traffic penalty weighting, a local delay-threshold dispatch heuristic, and trilingual alerts (English, Kannada, Hindi).
 
 ---
 
@@ -60,7 +60,7 @@ pip install -r requirements.txt
 Start the local server using Uvicorn:
 
 ```bash
-uvicorn app:app --reload --host 127.0.0.1 --port 8000
+uvicorn app:app --reload --host 127.0.0.1 --port 8000 --log-level info --no-access-log
 ```
 
 Once running:
@@ -79,11 +79,30 @@ Once running:
 | `/logo.jpeg` | `GET` | Serves the Namma Prayana logo image directly |
 | `/api/health` | `GET` | Health check endpoint returning status and service name |
 | `/api/fleet` | `GET` | Returns vehicle inventory and depot assignments from `bmtc_dump.xlsx` |
-| `/api/optimize` | `GET` | Runs predictive bunching, QUBO buffer solver, and multilingual alert generator. Accepts `scenario` (e.g., `Normal Flow`, `Heavy Rush Hour`, `Accident Delay`) and optional `qpiai_key`. |
+| `/api/optimize` | `GET` | Runs predictive bunching, the local delay-threshold dispatch heuristic, and multilingual alert generator. Accepts `scenario` (e.g., `Normal Flow`, `Heavy Rush Hour`, `Accident Delay`) and optional `X-QpiAI-Key` request header. |
 
 ---
 
 ## 6. Testing QpiAI Cloud Connection
+
+For cloud authentication and remote QpiAI execution, configure your API key in the
+`QPIAI_API_KEY` environment variable. In PowerShell, set it for the current terminal:
+
+```powershell
+$env:QPIAI_API_KEY = "your_qpiai_api_key"
+```
+
+The application still runs without the key using its local simulator/fallback. The
+`/api/optimize` response and generated logs include the selected backend, execution
+mode, circuit shots/counts, fallback status, and client-observed response timings.
+These timings include client/network wait for cloud calls; they are not QPU-only
+execution-time measurements. Dispatch is performed by a local delay-threshold
+heuristic, not a trained ML model or QpiAI-Opt cloud solver.
+
+Website HTTP requests, demo-login events, and UI button/field interactions are
+shown in the Uvicorn terminal and appended to `website_activity.log`. Login is a
+frontend demo only; no account credentials are validated or logged. Phone numbers,
+passwords, API keys, and form values are not included in activity events.
 
 To test connectivity with the QpiAI Quantum Cloud API:
 

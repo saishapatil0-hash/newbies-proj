@@ -1,5 +1,6 @@
 # test_qpiai.py
 import sys
+import os
 
 # Ensure UTF-8 output on Windows consoles
 try:
@@ -17,12 +18,17 @@ except ImportError:
     AuthError = Exception
     APIKeyInvalidError = Exception
 
-api_key = "316eccb24aa7549ccce98ad2e0716d7768e10d3fbce75d88b20b774424115b10"
+api_key = os.getenv("QPIAI_API_KEY")
 
 print("Authenticating with QpiAI...")
 
 if not HAS_QPIAI:
     print("[Notice] qpiai_quantum package not installed. Hybrid Simulation mode is active.")
+    sys.exit(0)
+
+if not api_key:
+    print("[Notice] QPIAI_API_KEY is not set. Skipping cloud authentication.")
+    print("Set QPIAI_API_KEY to check QpiAI Cloud resources.")
     sys.exit(0)
 
 try:

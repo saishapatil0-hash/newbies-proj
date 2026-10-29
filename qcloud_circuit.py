@@ -1,44 +1,36 @@
-# qcloud_circuit.py
-import sys
+import os
+import time
 
-# Ensure UTF-8 output on Windows consoles if needed
-try:
-    if hasattr(sys.stdout, 'reconfigure'):
-        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
-except Exception:
-    pass
+from qpiai_quantum import Circuit, QpiAIQuantumAuth
+from qpiai_quantum.authentication.exceptions import APIKeyInvalidError, AuthError
 
-try:
-    from qpiai_quantum import Circuit, QpiAIQuantumAuth
-    from qpiai_quantum.authentication.exceptions import APIKeyInvalidError, AuthError
-    HAS_QPIAI = True
-except ImportError:
-    HAS_QPIAI = False
-    APIKeyInvalidError = Exception
-    AuthError = Exception
 
 def run_traffic_penalty_circuit(congestion_factor, api_key=None):
-    """
-    Executes a 3-qubit parameterized quantum circuit to evaluate dynamic traffic
-    penalty weights for headway calculations. Uses QpiAI Cloud simulator or 
-    falls back to hybrid quantum simulation.
-    """
-    active_key = api_key or "316eccb24aa7549ccce98ad2e0716d7768e10d3fbce75d88b20b774424115b10"
-    
-    if not HAS_QPIAI:
-        return 1.85
+    started_at = time.perf_counter()
+    active_key = api_key or os.getenv("QPIAI_API_KEY")
+    authentication_time_ms = 0.0
+    execution_time_ms = 0.0
+    fallback_reason = None
+    execution_mode = "local_simulator"
+    backend = "QpiAI-QSV-Local"
+    status = "success"
+    counts = {}
 
-    try:
-        # Attempt cloud authentication
-        QpiAIQuantumAuth.login(api_key=active_key)
-    except (APIKeyInvalidError, AuthError) as auth_err:
-        print(f"[QpiAI Cloud Notice] {auth_err}. Seamlessly falling back to quantum simulation mode.")
-        return 1.85  # Fallback quantum traffic weight
-    except Exception as e:
-        print(f"[QpiAI Notice] {e}. Using simulation fallback.")
-        return 1.85
+    if active_key:
+        auth_started_at = time.perf_counter()
+        try:
+            QpiAIQuantumAuth.login(api_key=active_key)
+            execution_mode = "qpi_cloud"
+            backend = "QpiAI-QSV-Simulator"
+        except (APIKeyInvalidError, AuthError) as error:
+            fallback_reason = type(error).__name__
+        except Exception as error:
+            fallback_reason = type(error).__name__
+        finally:
+            authentication_time_ms = round(
+                (time.perf_counter() - auth_started_at) * 1000, 3
+            )
 
-    # Initialize 3-qubit quantum circuit if authentication succeeds
     try:
         circuit = Circuit(3, 3)
         circuit.h(0)
@@ -48,13 +40,59 @@ def run_traffic_penalty_circuit(congestion_factor, api_key=None):
         circuit.cx(1, 2)
         circuit.rz(0, float(congestion_factor) * 1.57)
         circuit.measure([0, 1, 2], [0, 1, 2])
-        
-        # Use supported simulator device 'QpiAI-QSV-Simulator'
-        job_result = circuit.run(shots=1024, experiment_name="BMTC_Headway_Recovery", device_name="QpiAI-QSV-Simulator")
+
+        run_started_at = time.perf_counter()
+        try:
+            job_result = circuit.run(
+                shots=1024,
+                experiment_name="BMTC_Headway_Recovery",
+                device_name=backend,
+            )
+        except Exception as error:
+            if execution_mode != "qpi_cloud":
+                raise
+            fallback_reason = type(error).__name__
+            execution_mode = "local_simulator"
+            backend = "QpiAI-QSV-Local"
+            job_result = circuit.run(
+                shots=1024,
+                experiment_name="BMTC_Headway_Recovery",
+                device_name=backend,
+            )
+
         counts = job_result.get_counts()
+        execution_time_ms = round((time.perf_counter() - run_started_at) * 1000, 3)
         dominant_state = max(counts, key=counts.get)
         theta_future = int(dominant_state, 2) * 0.25 + 1.0
-        return round(float(theta_future), 2)
-    except Exception as e:
-        print(f"[QCloud execution notice] {e}. Using simulated quantum weight.")
-        return 1.85
+    except Exception as error:
+        fallback_reason = fallback_reason or type(error).__name__
+        execution_mode = "local_fallback"
+        backend = None
+        status = "fallback"
+        theta_future = 1.85
+
+    telemetry = {
+        "model": "QpiAI 3-qubit traffic-penalty circuit (not a trained ML model)",
+        "status": status,
+        "execution_mode": execution_mode,
+        "backend": backend,
+        "shots": 1024,
+        "congestion_factor": float(congestion_factor),
+        "theta_future": theta_future,
+        "counts": counts,
+        "dominant_state": max(counts, key=counts.get) if counts else None,
+        "authentication_time_ms": authentication_time_ms,
+        "execution_time_ms": execution_time_ms,
+        "response_time_ms": round((time.perf_counter() - started_at) * 1000, 3),
+        "fallback_reason": fallback_reason,
+    }
+    print(
+        f"[TRAFFIC MODEL] {telemetry['model']} | Status: {status} | "
+        f"Mode: {execution_mode} | Backend: {backend or 'numeric fallback'} | "
+        f"Response: {telemetry['response_time_ms']} ms "
+        f"(auth {authentication_time_ms} ms, execution {execution_time_ms} ms)",
+        flush=True,
+    )
+    if fallback_reason:
+        print(f"[TRAFFIC MODEL] Fallback reason: {fallback_reason}", flush=True)
+    return telemetry

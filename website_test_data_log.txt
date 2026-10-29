@@ -1,6 +1,6 @@
 ================================================================================
                  NAMMA PRAYANA WEBSITE TEST DATA & TELEMETRY LOG                
-Logged At: 2026-10-30 03:15:14
+Logged At: 2026-10-30 03:49:00
 ================================================================================
 
 --------------------------------------------------------------------------------
@@ -21,28 +21,36 @@ Total Vehicles in Active Inventory: 4
     Active Fleet Sample: 8 buses monitored
     Calculated Quantum Penalty Weight (theta_future): 1.85
     Projected 20-min Transfer Hub Queue: 445 commuters waiting
-    QUBO Solver Status: Success (8 buses optimized)
+    Dispatch Status: Success (8 buses processed)
+    Dispatch Model: Delay-threshold dispatch heuristic (local)
+    Traffic Model: QpiAI 3-qubit traffic-penalty circuit (not a trained ML model) | Mode: local_fallback | Backend: local numeric fallback
+    Response Times (ms): traffic model=0.379, prediction=1.925, dispatch=2.898
+    Full Scenario Calculation Time: 5.168 ms
     Sample Headway Hold Orders:
-      * Bus: BMTC-500D-01 at Silk Board -> Hold: 27s (Optimal Convergence Achieved)
-      * Bus: BMTC-500D-02 at Marathahalli -> Hold: 28s (Optimal Convergence Achieved)
-      * Bus: BMTC-258A-01 at Hebbal -> Hold: 20s (Optimal Convergence Achieved)
-      * Bus: BMTC-258A-02 at Yelahanka -> Hold: 20s (Optimal Convergence Achieved)
+      * Bus: BMTC-500D-01 | Vehicle Type: AC Vajra at Silk Board -> Hold: 20s (Local heuristic decision)
+      * Bus: BMTC-500D-02 | Vehicle Type: AC Vajra at Marathahalli -> Hold: 21s (Local heuristic decision)
+      * Bus: BMTC-258A-01 | Vehicle Type: Ordinary at Hebbal -> Hold: 20s (Local heuristic decision)
+      * Bus: BMTC-258A-02 | Vehicle Type: Ordinary at Yelahanka -> Hold: 20s (Local heuristic decision)
     Sample Commuter Multilingual Alert:
-      * English: Notice: Bus BMTC-500D-01 execute a 27s micro-hold at Silk Board to balance headway and prevent bunching.
-      * Kannada: ಸೂಚನೆ: ಬಸ್ BMTC-500D-01 ವೇಳಾಪಟ್ಟಿಯನ್ನು ಸಮತೋಲನಗೊಳಿಸಲು Silk Board ನಿಲ್ದಾಣದಲ್ಲಿ 27 ಸೆಕೆಂಡುಗಳ ಕಾಲ ನಿಲ್ಲುತ್ತದೆ.
-      * Hindi:   सूचना: बस BMTC-500D-01 समय सारिणी को संतुलित करने के लिए Silk Board पर 27 सेकंड का ठहराव लेगी।
+      * English: Notice: Bus BMTC-500D-01 execute a 20s micro-hold at Silk Board to balance headway and prevent bunching.
+      * Kannada: ಸೂಚನೆ: ಬಸ್ BMTC-500D-01 ವೇಳಾಪಟ್ಟಿಯನ್ನು ಸಮತೋಲನಗೊಳಿಸಲು Silk Board ನಿಲ್ದಾಣದಲ್ಲಿ 20 ಸೆಕೆಂಡುಗಳ ಕಾಲ ನಿಲ್ಲುತ್ತದೆ.
+      * Hindi:   सूचना: बस BMTC-500D-01 समय सारिणी को संतुलित करने के लिए Silk Board पर 20 सेकंड का ठहराव लेगी।
 
 >>> SCENARIO: HEAVY RUSH HOUR
     Passenger Arrival Rate: 55 passengers/min
     Active Fleet Sample: 8 buses monitored
     Calculated Quantum Penalty Weight (theta_future): 1.85
     Projected 20-min Transfer Hub Queue: 1145 commuters waiting
-    QUBO Solver Status: Success (8 buses optimized)
+    Dispatch Status: Success (8 buses processed)
+    Dispatch Model: Delay-threshold dispatch heuristic (local)
+    Traffic Model: QpiAI 3-qubit traffic-penalty circuit (not a trained ML model) | Mode: local_fallback | Backend: local numeric fallback
+    Response Times (ms): traffic model=0.514, prediction=5.534, dispatch=0.93
+    Full Scenario Calculation Time: 6.94 ms
     Sample Headway Hold Orders:
-      * Bus: BMTC-500D-01 at Silk Board -> Hold: 45s (Optimal Convergence Achieved)
-      * Bus: BMTC-500D-02 at Marathahalli -> Hold: 45s (Optimal Convergence Achieved)
-      * Bus: BMTC-258A-01 at Hebbal -> Hold: 45s (Optimal Convergence Achieved)
-      * Bus: BMTC-258A-02 at Yelahanka -> Hold: 45s (Optimal Convergence Achieved)
+      * Bus: BMTC-500D-01 | Vehicle Type: AC Vajra at Silk Board -> Hold: 45s (Local heuristic decision)
+      * Bus: BMTC-500D-02 | Vehicle Type: AC Vajra at Marathahalli -> Hold: 45s (Local heuristic decision)
+      * Bus: BMTC-258A-01 | Vehicle Type: Ordinary at Hebbal -> Hold: 45s (Local heuristic decision)
+      * Bus: BMTC-258A-02 | Vehicle Type: Ordinary at Yelahanka -> Hold: 45s (Local heuristic decision)
     Sample Commuter Multilingual Alert:
       * English: Notice: Bus BMTC-500D-01 execute a 45s micro-hold at Silk Board to balance headway and prevent bunching.
       * Kannada: ಸೂಚನೆ: ಬಸ್ BMTC-500D-01 ವೇಳಾಪಟ್ಟಿಯನ್ನು ಸಮತೋಲನಗೊಳಿಸಲು Silk Board ನಿಲ್ದಾಣದಲ್ಲಿ 45 ಸೆಕೆಂಡುಗಳ ಕಾಲ ನಿಲ್ಲುತ್ತದೆ.
@@ -53,13 +61,33 @@ Total Vehicles in Active Inventory: 4
     Active Fleet Sample: 8 buses monitored
     Calculated Quantum Penalty Weight (theta_future): 1.85
     Projected 20-min Transfer Hub Queue: 1445 commuters waiting
-    QUBO Solver Status: Success (8 buses optimized)
+    Dispatch Status: Success (8 buses processed)
+    Dispatch Model: Delay-threshold dispatch heuristic (local)
+    Traffic Model: QpiAI 3-qubit traffic-penalty circuit (not a trained ML model) | Mode: local_fallback | Backend: local numeric fallback
+    Response Times (ms): traffic model=1.049, prediction=2.28, dispatch=1.546
+    Full Scenario Calculation Time: 4.253 ms
     Sample Headway Hold Orders:
-      * Bus: BMTC-500D-01 at Silk Board -> Hold: 45s (Optimal Convergence Achieved)
-      * Bus: BMTC-500D-02 at Marathahalli -> Hold: 45s (Optimal Convergence Achieved)
-      * Bus: BMTC-258A-01 at Hebbal -> Hold: 45s (Optimal Convergence Achieved)
-      * Bus: BMTC-258A-02 at Yelahanka -> Hold: 45s (Optimal Convergence Achieved)
+      * Bus: BMTC-500D-01 | Vehicle Type: AC Vajra at Silk Board -> Hold: 45s (Local heuristic decision)
+      * Bus: BMTC-500D-02 | Vehicle Type: AC Vajra at Marathahalli -> Hold: 45s (Local heuristic decision)
+      * Bus: BMTC-258A-01 | Vehicle Type: Ordinary at Hebbal -> Hold: 45s (Local heuristic decision)
+      * Bus: BMTC-258A-02 | Vehicle Type: Ordinary at Yelahanka -> Hold: 45s (Local heuristic decision)
     Sample Commuter Multilingual Alert:
       * English: Notice: Bus BMTC-500D-01 execute a 45s micro-hold at Silk Board to balance headway and prevent bunching.
       * Kannada: ಸೂಚನೆ: ಬಸ್ BMTC-500D-01 ವೇಳಾಪಟ್ಟಿಯನ್ನು ಸಮತೋಲನಗೊಳಿಸಲು Silk Board ನಿಲ್ದಾಣದಲ್ಲಿ 45 ಸೆಕೆಂಡುಗಳ ಕಾಲ ನಿಲ್ಲುತ್ತದೆ.
       * Hindi:   सूचना: बस BMTC-500D-01 समय सारिणी को संतुलित करने के लिए Silk Board पर 45 सेकंड का ठहराव लेगी।
+[2026-10-30 04:04:03] LIVE API RUN -> Scenario: Normal Flow | Arrival Rate: 20 pax/min
+  Quantum Traffic Weight (theta_future): 1.85
+  Traffic Model: QpiAI 3-qubit traffic-penalty circuit (not a trained ML model) | Status: fallback | Mode: local_fallback | Backend: local numeric fallback
+  Traffic Model Times (ms): auth=0.0, execution=0.0, response=1.092
+  Dispatch Model: Delay-threshold dispatch heuristic (local) | Response Time: 0.207 ms
+  Full Optimization Response Time: 5.238 ms
+  Total Buses Evaluated: 8 | Dispatch Engine: Local delay-threshold dispatch heuristic (Success)
+  Dispatch Model: Delay-threshold dispatch heuristic (local)
+  Hold Decisions Generated: 8
+    * Bus: BMTC-500D-01 | Type: AC Vajra @ Silk Board -> 36s micro-hold (Local heuristic decision)
+    * Bus: BMTC-500D-02 | Type: AC Vajra @ Marathahalli -> 20s micro-hold (Local heuristic decision)
+    * Bus: BMTC-258A-01 | Type: Ordinary @ Hebbal -> 32s micro-hold (Local heuristic decision)
+  Commuter Alert Sample:
+    [EN] Notice: Bus BMTC-500D-01 execute a 36s micro-hold at Silk Board to balance headway and prevent bunching.
+    [KN] ಸೂಚನೆ: ಬಸ್ BMTC-500D-01 ವೇಳಾಪಟ್ಟಿಯನ್ನು ಸಮತೋಲನಗೊಳಿಸಲು Silk Board ನಿಲ್ದಾಣದಲ್ಲಿ 36 ಸೆಕೆಂಡುಗಳ ಕಾಲ ನಿಲ್ಲುತ್ತದೆ.
+    [HI] सूचना: बस BMTC-500D-01 समय सारिणी को संतुलित करने के लिए Silk Board पर 36 सेकंड का ठहराव लेगी।
