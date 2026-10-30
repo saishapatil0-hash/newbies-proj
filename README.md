@@ -35,7 +35,7 @@ A unified, full-stack transit dispatch and headway optimization platform for Ben
 
 ## 3. Installation Guide
 
-### Step 1: Open a Terminal & Navigate to the Project Root
+### Step 1: Open Terminal & Navigate to the Project Root
 ```bash
 cd "c:\Users\saish\projects\namma-prayana"
 ```
