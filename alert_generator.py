@@ -1,4 +1,4 @@
-# alert_generator.py
+
 import sys
 import warnings
 
