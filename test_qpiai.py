@@ -20,7 +20,7 @@ except ImportError:
 
 api_key = os.getenv("QPIAI_API_KEY")
 
-print("Authenticating with QpiAI...")
+print("Authenticating with QpiAI....")
 
 if not HAS_QPIAI:
     print("[Notice] qpiai_quantum package not installed. Hybrid Simulation mode is active.")
